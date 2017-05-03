@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 16:36:44 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:05:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -808,15 +808,20 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	j = printf("blabla%d blabla %C", 5, 1234567);
 	printf(" -> %d for LIBC PF\n", j);
 
-*/
-
-
-
-printf("\nprintf(\"%%*d\", 5, 42);\n");
+	printf("\nprintf(\"%%*d\", 5, 42);\n");
 	i = ft_printf("%*d", 5, 42);
 	printf(" -> %d for my PF\n", i);
 	j = printf("%*d", 5, 42);
-	printf(" -> %d for LIBC PF\n", j);      
+	printf(" -> %d for LIBC PF\n", j);    
+
+*/
+
+	
+	i = ft_printf("{%05.*d}", -15, 42);
+	printf(" -> %d for my PF\n", i);
+	j = printf("{%05.*d}", -15, 42);
+	printf(" -> %d for LIBC PF\n", j);
+  
 
 
 	/*

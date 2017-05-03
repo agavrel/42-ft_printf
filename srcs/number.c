@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 16:33:50 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:00:59 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE], t_printf *p)
 	int		len;
 
 	len = p->printed;
-	p->c = 'a' - 10 - (p->f & F_UPCASE);
+	p->c = 'a' - 10 - ((p->f & F_UPCASE) >> 1);
 	while (len--)
 	{
 		s[len] = tmp % b + ((tmp % b < 10) ? '0' : p->c);

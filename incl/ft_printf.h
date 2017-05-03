@@ -6,48 +6,49 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 15:53:13 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:03:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# define MAX(a, b)			b & ((a - b) >> 31) | a & (~(a - b) >> 31)
-# define MIN(a, b)			a & ((a - b) >> 31) | b & (~(a - b) >> 31)
-# define ABS(a)				(a < 0) ? -a : a
-# define COLOR(s,n)			ft_putstr(s), (p->format += n)
-# define PF_RED				"\033[31m"
-# define PF_GREEN			"\033[32m"
-# define PF_YELLOW			"\033[33m"
-# define PF_BLUE			"\033[34m"
-# define PF_PURPLE			"\033[35m"
-# define PF_CYAN			"\033[36m"
-# define PF_EOC				"\033[36m"
+# define MAX(a, b)		b & ((a - b) >> 31) | a & (~(a - b) >> 31)
+# define MIN(a, b)		a & ((a - b) >> 31) | b & (~(a - b) >> 31)
+# define ABS(a)			(a < 0) ? -a : a
+# define COLOR(s,n)		ft_putstr(s), (p->format += n)
+# define PF_RED			"\033[31m"
+# define PF_GREEN		"\033[32m"
+# define PF_YELLOW		"\033[33m"
+# define PF_BLUE		"\033[34m"
+# define PF_PURPLE		"\033[35m"
+# define PF_CYAN		"\033[36m"
+# define PF_EOC			"\033[36m"
+# define PF_BUF_SIZE	64
 
 # include "libft.h"
 # include <stdarg.h>
 # include <errno.h>
 
 /*
-** refer to parsing.c for description of variables in below structures
+** --------------------------- Masks Definition --------------------------------
 */
 
-# define F_SHARP			(1 << 0)
-# define F_SPACE			(1 << 1)
-# define F_PLUS				(1 << 2)
-# define F_MINUS			(1 << 3)
-# define F_ZERO				(1 << 4)
-# define F_UPCASE			(1 << 5)
-# define F_SHORT			(1 << 6)
-# define F_SHORT2			(1 << 7)	
-# define F_LONG				(1 << 8)
-# define F_LONG2			(1 << 9)
-# define F_INTMAX			(1 << 10)
-# define F_SIZE_T			(1 << 11)
-# define F_MIN_LEN			(1 << 12)
-# define F_APP_PRECI		(1 << 13)
-# define PF_BUF_SIZE		64
+# define F_SHARP		(1 << 0)
+# define F_SPACE		(1 << 1)
+# define F_PLUS 		(1 << 2)
+# define F_MINUS        (1 << 3)
+# define F_ZERO			(1 << 4)
+# define F_WILDCARD		(1 << 5)
+# define F_UPCASE		(1 << 6)
+# define F_SHORT		(1 << 7)
+# define F_SHORT2		(1 << 8)
+# define F_LONG			(1 << 9)
+# define F_LONG2		(1 << 10)
+# define F_INTMAX		(1 << 11)
+# define F_SIZE_T		(1 << 12)
+# define F_MIN_LEN		(1 << 13)
+# define F_APP_PRECI	(1 << 14)
 
 /*
 ** f stands for flag, listed above
