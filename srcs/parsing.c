@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:39:02 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 18:47:18 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ static void	conversion_specifier(t_printf *p)
 	else if (p->format[0] == 'c' || p->format[0] == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
 	else if (p->format[0] == 's')
-		(p->f & F_LONG || p->f & F_LONG2) ? pf_putstr(p) : pf_putstr(p);
+		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
 	else if (p->format[0] == 'S')
 		pf_putwstr(p);
 	else if (p->format[0] == 'p')
