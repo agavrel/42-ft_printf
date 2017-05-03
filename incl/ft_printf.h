@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 07:02:25 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 09:05:28 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct	s_printf
 	char		buff[PF_BUF_SIZE];
 	va_list		ap;
 	char		*format;
+	unsigned	c;
 }				t_printf;
 
 /*
@@ -84,7 +85,6 @@ void			parse_optionals(t_printf *p);
 ** parsing conversion specifier
 */
 
-void			percent_char(t_printf *p);
 void			cs_not_found(t_printf *p);
 
 /*
@@ -103,9 +103,10 @@ void			itoa_base_fill(uintmax_t tmp, int base, char *str, t_printf *p);
 
 void			pf_string(t_printf *p);
 void			pf_wide_string(t_printf *p);
-void			pf_character(t_printf *p);
+void			pf_character(t_printf *p, unsigned c);
 void			ft_printf_putstr(char *s, t_printf *p);
 void			ft_printf_putwstr(wchar_t *s, t_printf *p);
+void			pf_putwchar(t_printf *p, unsigned int wc, int wlen, int n);
 
 /*
 ** bonus
@@ -121,11 +122,6 @@ void			ldtoa_fill(double n, t_printf *p);
 */
 
 int				ft_strchr_index(char *s, int c);
-
-/*
-** buffer function and padding function
-*/
-
 void			buffer(t_printf *p, void *new, size_t size);
 void			padding(t_printf *p, int n);
 

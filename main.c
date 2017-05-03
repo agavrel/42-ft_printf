@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 06:57:05 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 09:22:38 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		main(int ac, char **av)
 
 
 /*
+
 	printf("\n--intmax en hex--\n");
 	n = 2147483647;
 	i = ft_printf("Mon printf  : %x\n", n);
@@ -48,13 +49,13 @@ int		main(int ac, char **av)
 	printf("Moi %d Le vrai : %d\n", i, j);
 
 
-	printf("\n--intmax avec %%hlhx en hex--\n"); // a revoir
+	printf("\n--intmax avec %%hlhx en hex--\n");
 	n = 2147483647;
 	i = ft_printf("Mon printf  : %hlhx\n", n);
 	j = printf("Vrai printf : %hlhx\n", n);
 	printf("Moi %d Le vrai : %d\n", i, j);
 
-	printf("\n--unsigned char 128 en hex--\n"); // a revoir
+	printf("\n--unsigned char 128 en hex--\n");
 	k = 128;
 	i = ft_printf("Mon printf  : %hhx\n", k);
 	j = printf("Vrai printf : %hhx\n", k);
@@ -62,21 +63,28 @@ int		main(int ac, char **av)
 
 
 
+printf("\nprintf(\"%%S\", L\"我是一只猫。)\n");
+	i = ft_printf("%S", L"我是一只猫。");
+	printf(" -> %d for my PF\n", i);
+	j = printf("%S", L"我是一只猫。");
+	printf(" -> %d for LIBC PF\n", j);
 
 
 
+	i = ft_printf("%x", -42);      // a revoir
+	printf(" -> %d for my PF\n", i);
+	j = printf("%x", -42);  
+	printf(" -> %d for LIBC PF\n", j);   
+	i = ft_printf("%X", -42);  
+	printf(" -> %d for my PF\n", i);
+	j = printf("%X", -42);  
+	printf(" -> %d for LIBC PF\n", j);        
 
-
-	*/
 
 
 ft_printf("%#x", 0); 
-printf("%#x", 0);  
+printf("%#x", 0);  // a revoir
 
-
-
-	
-/*
 
 	printf("\n-- %%l15d --\n"); // a revoir
 	n = 2147483647;
@@ -167,10 +175,6 @@ printf("\n--pointeur--\n");
 
 
 
-	printf("\n-- string unicode --\n"); // a revoir manque le l de elodie
-	i = ft_printf("Mon printf  : %S\n", L"élodie");
-	j = printf("Vrai printf : %S\n", L"élodie");
-	printf("Moi %d Le vrai : %d\n", i, j);
 
 
 	printf("\n-- character --\n");                   
@@ -186,12 +190,6 @@ printf("\n--pointeur--\n");
 	j = printf("%");
 	printf("Moi %d Le vrai : %d\n", i, j);
 
-
-
-	printf("\n-- %%S 414 --\n");           // a revoir   
-	i = ft_printf("%lc\n", 414);
-	j = printf("%lc\n", 414);
-	printf("Moi %d Le vrai : %d\n", i, j);
 
 
 	printf("\n-- %%+n --\n");                     
@@ -437,30 +435,7 @@ printf("\nprintf(\"%% u\", 9999)\n");
 	j = printf("% u", 9999);
 	printf(" -> %d for LIBC PF\n", j);
 
-	printf("\nprintf(\"%%ls, %%ls\", L\"ÊM-^ZM-^VÁM-^BM-^I\", L\"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±\")\n");
-	i = ft_printf("%ls, %ls", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
-	printf(" -> %d for my PF\n", i);
-	j = printf("%ls, %ls", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
-	printf(" -> %d for LIBC PF\n", j); // a revoir
 
-printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n");//  a revoir
-	i = ft_printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for my PF\n", i);
-	j = printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for LIBC PF\n", j);
-
-	printf("\nprintf(\"{%%30S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n"); //  a revoir
-	i = ft_printf("{%30S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for my PF\n", i);
-	j = printf("{%30S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for LIBC PF\n", j);
-	
-
-printf("\nprintf(\"%%S\", L\"我是一只猫。)\n");// a revoir
-	i = ft_printf("%S", L"我是一只猫。");
-	printf(" -> %d for my PF\n", i);
-	j = printf("%S", L"我是一只猫。");
-	printf(" -> %d for LIBC PF\n", j);
 
 printf("\nprintf(\"%%c\", 200)\n");
 	i = ft_printf("%c", 200);
@@ -579,17 +554,6 @@ printf("\nprintf(\"{%%05p}\", 0)\n");
 	printf(" -> %d for LIBC PF\n", j);
 
 
-printf("\nprintf(\"%%15.4S\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n"); // a revoir
-	i = ft_printf("%15.4S", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for my PF\n", i);
-	j = printf("%15.4S", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf(" -> %d for LIBC PF\n", j);
-
-	printf("\nprintf(\"%%S\", L\"Á±≥\")\n"); // a revoir
-	i = ft_printf("%S", L"Á±≥");
-	printf(" -> %d for my PF\n", i);
-	j = printf("%S", L"Á±≥");
-	printf(" -> %d for LIBC PF\n", j);
 
 
 
@@ -722,12 +686,6 @@ printf("\nprintf(\"%% \")\n");
 
 
 
-	//printf("\nprintf(\"%%15.4S\", L\"我是一只猫。\");\n"); // OK as undefined
-	i = ft_printf("%15.4S", L"我是一只猫。");
-	printf(" -> %d for my PF\n", i);
-	j = printf("%15.4S", L"我是一只猫。");
-	printf(" -> %d for LIBC PF\n", j);
-
 
 	//printf("\nprintf(\"%%ll#x\", 9223372036854775807)\n");
 	i = ft_printf("%ll#x", 9223372036854775807);
@@ -795,7 +753,69 @@ j = printf("{%s}", 0);
 	j = printf("Vrai printf : %s\n", "abc");
 	printf("Moi %d Le vrai : %d\n", i, j);
 
+	printf("\n-- string unicode --\n"); 
+	i = ft_printf("Mon printf  : %S\n", L"élodie");
+	j = printf("Vrai printf : %S\n", L"élodie");
+	printf("Moi %d Le vrai : %d\n", i, j);
 
+	//printf("\nprintf(\"%%15.4S\", L\"我是一只猫。\");\n");
+	i = ft_printf("%15.4S", L"我是一只猫。");
+	printf(" -> %d for my PF\n", i);
+	j = printf("%15.4S", L"我是一只猫。");
+	printf(" -> %d for LIBC PF\n", j);
+
+
+
+	printf("\nprintf(\"%%S\", L\"Á±≥\")\n");
+	i = ft_printf("%S", L"Á±≥");
+	printf(" -> %d for my PF\n", i);
+	j = printf("%S", L"Á±≥");
+	printf(" -> %d for LIBC PF\n", j);
+
+
+	printf("\n-- %%S 414 --\n"); 
+	i = ft_printf("%lc\n", 414);
+	j = printf("%lc\n", 414);
+	printf("Moi %d Le vrai : %d\n", i, j);
+
+
+	printf("\n-- %%S 414 --\n"); 
+	i = ft_printf("%c\n", 414);
+	j = printf("%c\n", 414);
+	printf("Moi %d Le vrai : %d\n", i, j);
+
+	printf("\nprintf(\"%%15.4S\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n");
+	i = ft_printf("%15.4S", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for my PF\n", i);
+	j = printf("%15.4S", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for LIBC PF\n", j);
+
+
+		printf("\nprintf(\"%%ls, %%ls\", L\"ÊM-^ZM-^VÁM-^BM-^I\", L\"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±\")\n");
+	i = ft_printf("%ls, %ls", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
+	printf(" -> %d for my PF\n", i);
+	j = printf("%ls, %ls", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
+	printf(" -> %d for LIBC PF\n", j); 
+
+
+	printf("\nprintf(\"{%%30S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n"); 
+	i = ft_printf("{%30S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for my PF\n", i);
+	j = printf("{%30S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for LIBC PF\n", j);
+
+	
+*/
+
+printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n");
+	i = ft_printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for my PF\n", i);
+	j = printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	printf(" -> %d for LIBC PF\n", j);
+
+
+
+	/*
 
 
 	printf("\n  \n");
@@ -805,9 +825,6 @@ j = printf("{%s}", 0);
 	printf(" -> %d for LIBC PF\n", j);
 
 
+	*/
 
-
-
-
-*/
 }

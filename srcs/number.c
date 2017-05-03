@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 06:52:10 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 09:18:36 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	pf_putnb_base(int base, t_printf *p)
 
 void	itoa_printf(intmax_t n, t_printf *p)
 {
-	char		s[PF_BUF_SIZE];
+	char		s[21];
 	int			len;
 	uintmax_t	tmp;
 
@@ -101,7 +101,7 @@ void	itoa_printf(intmax_t n, t_printf *p)
 void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 {
 	uintmax_t	tmp;
-	char		s[19];
+	char		s[21];
 	int			ext;
 
 	p->printed = 0;

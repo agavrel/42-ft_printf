@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 06:40:17 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 09:24:41 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,35 @@
 ** 00000080 -- 000007FF: 	110xxxxx 10xxxxxx
 ** 00000800 -- 0000FFFF: 	1110xxxx 10xxxxxx 10xxxxxx
 ** 00010000 -- 001FFFFF: 	11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-** *nb_bytes <= MB_CUR_MAX define in stdlib.h
+** nb_bytes <= MB_CUR_MAX define in stdlib.h
 */
 
-void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int *nb_bytes)
+void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 {
 	char	tmp[4];
 
-	if ((*nb_bytes = ft_wcharlen(wc)) <= wlen && *nb_bytes <= MB_CUR_MAX)
+	if (nb_bytes <= wlen && nb_bytes <= MB_CUR_MAX)
 	{
-		if (*nb_bytes == 1)
+		if (nb_bytes == 1)
 			tmp[0] = wc;
 		else
 		{
-			if (*nb_bytes == 2)
-				tmp[0] = ((wc & (0x1f << 6)) >> 6) + 0xC0;
+			if (nb_bytes == 2)
+				tmp[0] = ((wc & (0x1f << 6)) >> 6) | 0xC0;
 			else
 			{
-				if (*nb_bytes == 3)
-					tmp[0] = ((wc & (0xf << 12)) >> 12) + 0xE0;
+				if (nb_bytes == 3)
+					tmp[0] = ((wc >> 12) & 0xf) | 0xE0;
 				else
 				{
-					tmp[0] = ((wc & (0x7 << 18)) >> 18) + 0xF0;
-					tmp[1] = ((wc & (0x3f << 12)) >> 12) + 0x80;
+					tmp[0] = ((wc >> 18) & 7) | 0xF0;
+					tmp[1] = ((wc >> 12) & 0x3f) | 0x80;
 				}
-				tmp[*nb_bytes - 2] = ((wc & (0x3f << 6)) >> 6) + 0x80;
+				tmp[nb_bytes - 2] = ((wc >> 6) & 0x3f) | 0x80;
 			}
-			tmp[*nb_bytes - 1] = (wc & 0x3f) + 0x80;
+			tmp[nb_bytes - 1] = (wc & 0x3f) | 0x80;
 		}
-		buffer(p, tmp, *nb_bytes);
+		buffer(p, tmp, nb_bytes);
 	}
 }
 
@@ -66,16 +66,15 @@ void	pf_wide_string(t_printf *p)
 	{
 		wlen = (int)(ft_wstrlen((unsigned *)s));
 		(p->f & F_APP_PRECI) ? wlen = MIN(p->precision, wlen) : 0;
-		p->padding = MAX(p->min_length - wlen + (p->precision > 1 ? 1 : 0), 0);
+		p->padding = MAX(p->min_length - wlen, 0);
 		p->f = (p->min_length > p->precision) ?
 			p->f & ~F_APP_PRECI : p->f | F_APP_PRECI;
 		padding(p, 0);
 		charlen = 0;
-		while (*s && (wlen -= charlen) > 0)
+		while ((p->c = *s++) && (wlen -= charlen) > 0)
 		{
-			charlen = 0;
-			pf_putwchar(p, *s, wlen, &charlen);
-			s += charlen;
+			charlen = ft_wcharlen(p->c);
+			pf_putwchar(p, p->c, wlen, charlen);
 		}
 		padding(p, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 06:36:19 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 08:49:56 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,26 +146,27 @@ static int	ft_strchr_index_2(char *s, int c)
 
 static void	conversion_specifier(t_printf *p)
 {
+	p->c = *p->format;
 	p->printed = 0;
-	if (ft_strchr("oOuUbBxX", *p->format))
-		pf_putnb_base(ft_strchr_index_2(".b..ou..x", *p->format) << 1, p);
-	else if (ft_strchr("dDi", *p->format))
+	if (ft_strchr("oOuUbBxX", p->c))
+		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->c) << 1, p);
+	else if (ft_strchr("dDi", p->c))
 		pf_putnb(p);
-	else if (*p->format == 'c' || *p->format == 'C')
-		pf_character(p);
-	else if (*p->format == 's')
+	else if (p->c == 'c' || p->c == 'C')
+		pf_character(p, va_arg(p->ap, unsigned));
+	else if (p->c == 's')
 		(p->f & LM_LONG || p->f & LM_LONG2) ? pf_wide_string(p) : pf_string(p);
-	else if (*p->format == 'S')
+	else if (p->c == 'S')
 		pf_wide_string(p);
-	else if (*p->format == 'p')
+	else if (p->c == 'p')
 		print_pointer_address(p);
-	else if (*p->format == 'n')
+	else if (p->c == 'n')
 		*va_arg(p->ap, int *) = p->len;
-	else if (*p->format == 'm')
+	else if (p->c == 'm')
 		ft_printf_putstr(strerror(errno), p);
-	else if (*p->format == 'f' || *p->format == 'F')
+	else if (p->c == 'f' || p->c == 'F')
 		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
-	else if (*p->format == '{')
+	else if (p->c == '{')
 		color(p);
 	else
 		cs_not_found(p);
