@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/02 13:48:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:39:56 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 13:43:07 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ static const char	*byte_zero(const unsigned long *longword_ptr,
 			i = 0;
 			cp = (const char *)(longword_ptr - 1);
 			while (i < 4)
-				if (!cp[i++])
-					return (cp + i - 1);
+			{
+				if (!cp[i])
+					return (cp + i);
+				++i;
+			}
 			if (sizeof(longword) > 4)
 				while (i < 8)
 					if (!cp[i++])

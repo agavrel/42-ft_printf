@@ -19,7 +19,7 @@ PRINTF is a 42 Project that aims to mimic libc printf function
 5) ft_printf_putstr(strerror(errno), p) with %m
 6) colors with '{' and '}'
 7) %f and %F to print double
-8) 80% speed of original printf thanks to the inclusion of a buffer
+8) same speed than original libc printf thanks to buffer addition and ft_strlen.
 
 
 ## Sources
