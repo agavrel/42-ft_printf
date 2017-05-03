@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 11:14:16 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:21:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	padding(t_printf *p, int n)
 		p->c = 32 | (p->f & F_ZERO);
 		if (!n && !(p->f & F_MINUS))
 			while (p->padding--)
-				buffer(p, &p->c, 1);	
+				buffer(p, &p->c, 1);
 		else if (n && (p->f & F_MINUS))
 			while (p->padding--)
 				buffer(p, &p->c, 1);
