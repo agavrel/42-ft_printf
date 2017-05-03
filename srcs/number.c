@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:00:59 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:17:48 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,10 @@ void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 	((p->f & F_SHARP) && b == 16 && !(p->f & F_ZERO)) ? p->min_length -= 2 : 0;
 	p->padding = MAX(0, (p->min_length - p->printed));
 	padding(p, 0);
-	if ((p->f & F_SHARP) && ((b == 8 && !ext) || (b == 16)))
+	if ((n || (p->f & F_POINTER))
+		&& (p->f & F_SHARP) && ((b == 8 && !ext) || (b == 16)))
 		buffer(p, "0", 1);
-	if ((p->f & F_SHARP) && b == 16)
+	if ((n || (p->f & F_POINTER)) && (p->f & F_SHARP) && b == 16)
 		buffer(p, (p->f & F_UPCASE) ? "X" : "x", 1);
 	itoa_base_fill(n, b, s, p);
 	buffer(p, s, p->printed);

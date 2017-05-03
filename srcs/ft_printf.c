@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 16:34:31 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:18:30 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	print_pointer_address(t_printf *p)
 	p->padding = (p->printed > p->min_length - 3) ? 0 :
 		p->min_length - 3 - p->printed;
 	p->f |= F_SHARP;
+	p->f |= F_POINTER;
 	itoa_base_printf((uintmax_t)pointer, 16, p);
 }
 

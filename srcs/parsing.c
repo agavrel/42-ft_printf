@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:03:37 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:39:02 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,30 @@
 
 static void	parse_flags(t_printf *p)
 {
-	short    n;
+	short	n;
 
-    while ((n = ft_strchr_index("# +-0*", p->format[0])) > -1 && ++p->format)
-        p->f |= (1 << n);
-    if (p->f & F_WILDCARD)
-    {
-        p->f &= ~F_WILDCARD;
-        p->min_length = (int)va_arg(p->ap, int);
-        p->f = (p->min_length < 0) ? p->f | F_MINUS : p->f & ~F_MINUS;
-        p->min_length = ABS(p->min_length);
-        if (p->f & F_APP_PRECI)
-        {
-            p->precision = (!(p->f & F_MINUS)) ? p->min_length : 0;
-            p->f = (!p->min_length) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
-        }
-    }
+	while ((n = ft_strchr_index("# +-0*", p->format[0])) > -1 && ++p->format)
+		p->f |= (1 << n);
+	((p->f & F_MINUS) && !(p->f & F_WILDCARD)) ? p->f &= ~F_ZERO : 0;
+	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
+	if (p->f & F_WILDCARD)
+	{
+		p->f &= ~F_WILDCARD;
+		if ((n = (int)va_arg(p->ap, int)) < 0)
+		{
+			p->f |= F_MINUS;
+			n = -n;
+		}
+		else
+			p->f &= ~F_MINUS;
+		if (!(p->f & F_APP_PRECI))
+			p->min_length = n;
+		else
+		{
+			p->precision = (!(p->f & F_MINUS)) ? n : 0;
+			p->f = (!n) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
+		}
+	}
 }
 
 /*
@@ -195,8 +203,6 @@ void		parse_optionals(t_printf *p)
 		++p->format;
 	}
 	parse_flags(p);
-	(p->f & F_MINUS) ? p->f &= ~F_ZERO : 0;
-	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
 	if (ft_strchr("CDSUOB", p->format[0]))
 		p->f |= F_LONG;
 	else if (p->format[0] == 'X')

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:03:03 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 17:16:46 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define F_SIZE_T		(1 << 12)
 # define F_MIN_LEN		(1 << 13)
 # define F_APP_PRECI	(1 << 14)
+# define F_POINTER		(1 << 15)
 
 /*
 ** f stands for flag, listed above
