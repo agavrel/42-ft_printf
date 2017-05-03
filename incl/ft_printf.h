@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 10:09:07 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:11:57 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@
 # define F_PLUS				(1 << 2)
 # define F_MINUS			(1 << 3)
 # define F_ZERO				(1 << 4)
-# define LM_LONG			(1 << 5)
-# define LM_LONG2			(1 << 6)
-# define LM_SHORT			(1 << 7)
-# define LM_SHORT2			(1 << 8)
-# define LM_INTMAX			(1 << 9)
-# define LM_SIZE_T			(1 << 10)
+# define F_LONG				(1 << 5)
+# define F_LONG2			(1 << 6)
+# define F_SHORT			(1 << 7)
+# define F_SHORT2			(1 << 8)
+# define F_INTMAX			(1 << 9)
+# define F_SIZE_T			(1 << 10)
 # define F_MIN_LEN			(1 << 11)
 # define F_APP_PRECI		(1 << 12)
-# define F_WILDCARD			(1 << 13)
 # define PF_BUF_SIZE		64
 
 /*
@@ -74,6 +73,7 @@ typedef struct	s_printf
 */
 
 int				ft_printf(const char *format, ...);
+int				ft_dprintf(int fd, const char *format, ...);
 
 /*
 ** parsing optional parameters
@@ -101,11 +101,10 @@ void			itoa_base_fill(uintmax_t tmp, int base, char *str, t_printf *p);
 ** strings and characters related functions
 */
 
-void			pf_string(t_printf *p);
-void			pf_wide_string(t_printf *p);
+void			pf_putstr(t_printf *p);
+void			pf_putwstr(t_printf *p);
 void			pf_character(t_printf *p, unsigned c);
 void			ft_printf_putstr(char *s, t_printf *p);
-void			ft_printf_putwstr(wchar_t *s, t_printf *p);
 void			pf_putwchar(t_printf *p, unsigned int wc, int wlen, int n);
 
 /*

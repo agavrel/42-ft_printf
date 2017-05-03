@@ -6,11 +6,11 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 15:55:33 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 10:08:55 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:54:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/ft_printf.h"
+#include <ft_printf.h>
 
 /*
 ** bonuses done :

@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/28 18:36:22 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/01 17:21:54 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/03 10:55:10 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRCS_NAME = ft_printf.c \
 			parsing.c \
 			number.c \
 			string.c \
-			character.c \
 			bonus.c \
 			buffer.c \
 

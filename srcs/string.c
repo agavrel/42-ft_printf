@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:24:41 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 11:07:14 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 ** please refer to libft for ft_wcharlen and ft_wstrlen
 */
 
-void	pf_wide_string(t_printf *p)
+void	pf_putwstr(t_printf *p)
 {
 	wchar_t		*s;
 	int			wlen;
 	int			charlen;
 
 	if (!(s = va_arg(p->ap, wchar_t *)))
-		ft_printf_putwstr((wchar_t *)s, p);
+		buffer(p, "(null)", 6);
 	else
 	{
 		wlen = (int)(ft_wstrlen((unsigned *)s));
@@ -84,7 +84,7 @@ void	pf_wide_string(t_printf *p)
 ** print regular string and returns its len
 */
 
-void	pf_string(t_printf *p)
+void	pf_putstr(t_printf *p)
 {
 	unsigned	*s;
 	int			len;
@@ -120,10 +120,17 @@ void	ft_printf_putstr(char *s, t_printf *p)
 		buffer(p, s, (int)ft_strlen(s));
 }
 
-void	ft_printf_putwstr(wchar_t *s, t_printf *p)
+/*
+** returns a single character len and display it
+** refer to libft for putwchar amd wcharlen functions
+*/
+
+void	pf_character(t_printf *p, unsigned c)
 {
-	if (s == L'\0')
-		buffer(p, "(null)", 6);
-	else
-		ft_putwstr(s);
+	p->printed = (p->f & F_LONG || p->f & F_LONG2) ? ft_wcharlen(c) : 1;
+	if ((p->padding = p->min_length - p->printed) < 0)
+		p->padding = 0;
+	padding(p, 0);
+	pf_putwchar(p, c, p->printed, p->printed);
+	padding(p, 1);
 }

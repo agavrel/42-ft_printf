@@ -6,11 +6,11 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 00:02:06 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/02 20:36:08 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:53:43 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/ft_printf.h"
+#include <ft_printf.h>
 
 void		buffer(t_printf *p, void *new, size_t size)
 {

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:57:58 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:45:35 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,19 @@
 
 static void	parse_flags(t_printf *p)
 {
-	int		tmp;
 	short	n;
 
 	while ((n = ft_strchr_index("# +-0", *p->format)) > -1 && ++p->format)
 		p->f |= (1 << n);
 	if (*p->format == '*')
 	{
-		tmp = (int)va_arg(p->ap, int);
-		p->f &= ~F_WILDCARD;
-		p->f = (tmp < 0) ? p->f | F_MINUS : p->f & ~F_MINUS;
-		tmp = ABS(tmp);
-		if (!(p->f & F_APP_PRECI))
-			p->min_length = tmp;
-		else
+		p->min_length = (int)va_arg(p->ap, int);
+		p->f = (p->min_length < 0) ? p->f | F_MINUS : p->f & ~F_MINUS;
+		p->min_length = ABS(p->min_length);
+		if (p->f & F_APP_PRECI)
 		{
-			p->precision = (!(p->f & F_MINUS)) ? tmp : 0;
-			p->f = (!tmp) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
+			p->precision = (!(p->f & F_MINUS)) ? p->min_length : 0;
+			p->f = (!p->min_length) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
 		}
 	}
 }
@@ -89,16 +85,16 @@ static void	parse_flags(t_printf *p)
 
 static void	field_width_precision(t_printf *p)
 {
-	if (48 < *p->format && *p->format < 58)
+	if (48 < p->format[0] && p->format[0] < 58)
 	{
 		p->min_length = MAX(1, ft_atoi(p->format));
-		while (47 < *p->format && *p->format < 58)
+		while (47 < p->format[0] && p->format[0] < 58)
 			++p->format;
 	}
-	if (*p->format == '.' && ++p->format)
+	if (p->format[0] == '.' && ++p->format)
 	{
 		p->precision = MAX(ft_atoi(p->format), 0);
-		while (47 < *p->format && *p->format < 58)
+		while (47 < p->format[0] && p->format[0] < 58)
 			++p->format;
 		p->f |= F_APP_PRECI;
 	}
@@ -142,27 +138,26 @@ static int	ft_strchr_index_2(char *s, int c)
 
 static void	conversion_specifier(t_printf *p)
 {
-	p->c = *p->format;
 	p->printed = 0;
-	if (ft_strchr("oOuUbBxX", p->c))
-		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->c) << 1, p);
-	else if (ft_strchr("dDi", p->c))
+	if (ft_strchr("oOuUbBxX", p->format[0]))
+		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->format[0]) << 1, p);
+	else if (ft_strchr("dDi", p->format[0]))
 		pf_putnb(p);
-	else if (p->c == 'c' || p->c == 'C')
+	else if (p->format[0] == 'c' || p->format[0] == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
-	else if (p->c == 's')
-		(p->f & LM_LONG || p->f & LM_LONG2) ? pf_wide_string(p) : pf_string(p);
-	else if (p->c == 'S')
-		pf_wide_string(p);
-	else if (p->c == 'p')
+	else if (p->format[0] == 's')
+		(p->f & F_LONG || p->f & F_LONG2) ? pf_putstr(p) : pf_putstr(p);
+	else if (p->format[0] == 'S')
+		pf_putwstr(p);
+	else if (p->format[0] == 'p')
 		print_pointer_address(p);
-	else if (p->c == 'n')
+	else if (p->format[0] == 'n')
 		*va_arg(p->ap, int *) = p->len;
-	else if (p->c == 'm')
+	else if (p->format[0] == 'm')
 		ft_printf_putstr(strerror(errno), p);
-	else if (p->c == 'f' || p->c == 'F')
+	else if (p->format[0] == 'f' || p->format[0] == 'F')
 		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
-	else if (p->c == '{')
+	else if (p->format[0] == '{')
 		color(p);
 	else
 		cs_not_found(p);
@@ -186,24 +181,22 @@ void		parse_optionals(t_printf *p)
 	p->precision = 1;
 	parse_flags(p);
 	field_width_precision(p);
-	while (ft_strchr("hljzL", *p->format))
+	while (ft_strchr("hljzL", p->format[0]))
 	{
-		if (*p->format == 'h')
-			p->f |= (*(p->format + 1) == 'h' && ++p->format) ?
-				LM_SHORT2 : LM_SHORT;
-		else if (*p->format == 'l')
-			p->f |= (*(p->format + 1) == 'l' && ++p->format) ?
-				LM_LONG2 : LM_LONG;
-		else if (*p->format == 'j')
-			p->f |= LM_INTMAX;
-		else if (*p->format == 'z')
-			p->f |= LM_SIZE_T;
+		if (p->format[0] == 'h')
+			p->f |= (p->format[1] == 'h' && ++p->format) ? F_SHORT2 : F_SHORT;
+		else if (p->format[0] == 'l')
+			p->f |= (p->format[1] == 'l' && ++p->format) ? F_LONG2 : F_LONG;
+		else if (p->format[0] == 'j')
+			p->f |= F_INTMAX;
+		else if (p->format[0] == 'z')
+			p->f |= F_SIZE_T;
 		++p->format;
 	}
 	parse_flags(p);
 	(p->f & F_MINUS) ? p->f &= ~F_ZERO : 0;
 	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
-	if (ft_strchr("CDSUOBX", *p->format))
-		p->f |= LM_LONG;
+	if (ft_strchr("CDSUOBX", p->format[0]))
+		p->f |= F_LONG;
 	conversion_specifier(p);
 }

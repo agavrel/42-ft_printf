@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 10:01:09 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:35:00 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	pf_putnb(t_printf *p)
 {
 	intmax_t	n;
 
-	if (p->f & LM_LONG || p->f & LM_LONG2)
-		n = (p->f & LM_LONG2) ? ((intmax_t)va_arg(p->ap, long long)) :
+	if (p->f & F_LONG || p->f & F_LONG2)
+		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, long long)) :
 			((intmax_t)va_arg(p->ap, long));
-	else if (p->f & LM_SHORT || p->f & LM_SHORT2)
-		n = (p->f & LM_SHORT2) ? (intmax_t)((char)va_arg(p->ap, int)) :
+	else if (p->f & F_SHORT || p->f & F_SHORT2)
+		n = (p->f & F_SHORT2) ? (intmax_t)((char)va_arg(p->ap, int)) :
 			(intmax_t)((short)va_arg(p->ap, int));
-	else if (p->f & LM_INTMAX)
+	else if (p->f & F_INTMAX)
 		n = (va_arg(p->ap, intmax_t));
-	else if (p->f & LM_SIZE_T)
+	else if (p->f & F_SIZE_T)
 		n = ((intmax_t)va_arg(p->ap, ssize_t));
 	else
 		n = ((intmax_t)va_arg(p->ap, int));
@@ -46,15 +46,15 @@ void	pf_putnb_base(int base, t_printf *p)
 {
 	uintmax_t	n;
 
-	if (p->f & LM_LONG || p->f & LM_LONG2)
-		n = (p->f & LM_LONG2) ? ((intmax_t)va_arg(p->ap, unsigned long long)) :
+	if (p->f & F_LONG || p->f & F_LONG2)
+		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, unsigned long long)) :
 			((intmax_t)va_arg(p->ap, unsigned long));
-	else if (p->f & LM_SHORT || p->f & LM_SHORT2)
-		n = (p->f & LM_SHORT2) ? (uintmax_t)((unsigned char)va_arg(p->ap, int))
+	else if (p->f & F_SHORT || p->f & F_SHORT2)
+		n = (p->f & F_SHORT2) ? (uintmax_t)((unsigned char)va_arg(p->ap, int))
 			: (uintmax_t)((unsigned short)va_arg(p->ap, int));
-	else if (p->f & LM_INTMAX)
+	else if (p->f & F_INTMAX)
 		n = (va_arg(p->ap, uintmax_t));
-	else if (p->f & LM_SIZE_T)
+	else if (p->f & F_SIZE_T)
 		n = ((uintmax_t)va_arg(p->ap, size_t));
 	else
 		n = (uintmax_t)va_arg(p->ap, unsigned int);
@@ -118,7 +118,7 @@ void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 	if ((p->f & F_SHARP) && ((b == 8 && !ext) || (b == 16)))
 		buffer(p, "0", 1);
 	if ((p->f & F_SHARP) && b == 16)
-		buffer(p, (p->f & LM_LONG) ? "X" : "x", 1);
+		buffer(p, (p->f & F_LONG) ? "X" : "x", 1);
 	itoa_base_fill(n, b, s, p);
 	buffer(p, s, p->printed);
 	padding(p, 1);
@@ -126,7 +126,7 @@ void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 
 /*
 ** variable letter only works for base 16 in printf
-** letter = 'a' - 10 - (p->f & LM_LONG) is to get directly the
+** letter = 'a' - 10 - (p->f & F_LONG) is to get directly the
 ** letter with caplock if X was parsed.
 */
 
@@ -135,7 +135,7 @@ void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE], t_printf *p)
 	int		len;
 
 	len = p->printed;
-	p->c = 'a' - 10 - (p->f & LM_LONG);
+	p->c = 'a' - 10 - (p->f & F_LONG);
 	while (len--)
 	{
 		s[len] = tmp % b + ((tmp % b < 10) ? '0' : p->c);

@@ -12,12 +12,14 @@ PRINTF is a 42 Project that aims to mimic libc printf function
 6) displaying pointer address
 
 * Bonus:
-1) wildcard_length_modifier : replaces precision and field_width with parameter in va_list ap.
-2) print_len (refer to ft_printf.c : *va_arg(ap, int *) = p->len;)
-3) ft_printf_putstr(strerror(errno), p)
-4) colors with {}
-5) fF for floats
-6) 23% speed of original printf
+1) Handles multi fd (use ft_dprintf(int fd, char const format, ...) instead of ft_printf)
+2) All flags stored on only 13 bits
+3) wildcard_length_modifier : replaces precision and field_width with parameter in va_list ap.
+4) print_len with %n (refer to ft_printf.c : *va_arg(ap, int *) = p->len;)
+5) ft_printf_putstr(strerror(errno), p) with %m
+6) colors with '{' and '}'
+7) %f and %F to print double
+8) 80% speed of original printf thanks to the inclusion of a buffer
 
 
 ## Sources
