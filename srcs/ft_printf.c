@@ -6,11 +6,11 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 11:21:03 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 16:34:31 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/ft_printf.h"
+#include <ft_printf.h>
 
 /*
 ** main function : printf will return the total len of chars displayed by printf
@@ -24,9 +24,9 @@ int		ft_printf(const char *format, ...)
 	p.fd = 1;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (*p.format)
+	while (p.format[0])
 	{
-		if (*p.format == '%')
+		if (p.format[0] == '%')
 		{
 			++p.format;
 			if (!p.format[0] || (p.format[0] == ' ' && (!p.format[1]
@@ -56,9 +56,9 @@ int		ft_dprintf(int fd, const char *format, ...)
 	p.fd = fd;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (*p.format)
+	while (p.format[0])
 	{
-		if (*p.format == '%')
+		if (p.format[0] == '%')
 		{
 			++p.format;
 			if (!p.format[0] || (p.format[0] == ' ' && (!p.format[1]

@@ -6,11 +6,11 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 15:52:13 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 16:37:53 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/ft_printf.h"
+#include <ft_printf.h>
 
 /*
 ** 						~ FLAGS ~
@@ -24,9 +24,7 @@ static void	parse_flags(t_printf *p)
 {
 	short	n;
 
-	while ((n = ft_strchr_index("# +-0", *p->format)) > -1 && ++p->format)
-		p->f |= (1 << n);
-	if (*p->format == '*')
+	if (p->format[0] == '*')
 	{
 		p->min_length = (int)va_arg(p->ap, int);
 		p->f = (p->min_length < 0) ? p->f | F_MINUS : p->f & ~F_MINUS;
@@ -36,7 +34,10 @@ static void	parse_flags(t_printf *p)
 			p->precision = (!(p->f & F_MINUS)) ? p->min_length : 0;
 			p->f = (!p->min_length) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
 		}
+		++p->format;
 	}
+	while ((n = ft_strchr_index("# +-0", p->format[0])) > -1 && ++p->format)
+		p->f |= (1 << n);
 }
 
 /*

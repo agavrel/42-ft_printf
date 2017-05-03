@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 12:26:51 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 16:36:44 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -579,11 +579,7 @@ printf("\nprintf(\"{%%05p}\", 0)\n");
 	printf(" -> %d for LIBC PF\n", j);
 
 
-printf("\nprintf(\"%%*d\", 5, 42);\n");
-	i = ft_printf("%*d", 5, 42);
-	printf(" -> %d for my PF\n", i);
-	j = printf("%*d", 5, 42);
-	printf(" -> %d for LIBC PF\n", j);         
+   
 
 
 
@@ -807,16 +803,20 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	ft_dprintf("%05d\n", 42);
 	dprintf("%05d\n", 42);
 
-
-
-*/
-
 	i = ft_printf("blabla%d blabla %C", 5, 1334567); // a revoir
 	printf(" -> %d for my PF\n", i);
 	j = printf("blabla%d blabla %C", 5, 1234567);
 	printf(" -> %d for LIBC PF\n", j);
 
+*/
 
+
+
+printf("\nprintf(\"%%*d\", 5, 42);\n");
+	i = ft_printf("%*d", 5, 42);
+	printf(" -> %d for my PF\n", i);
+	j = printf("%*d", 5, 42);
+	printf(" -> %d for LIBC PF\n", j);      
 
 
 	/*
