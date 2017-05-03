@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:05:28 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:09:07 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@
 */
 
 # define F_SHARP			(1 << 0)
-# define F_ZERO				(1 << 1)
+# define F_SPACE			(1 << 1)
 # define F_PLUS				(1 << 2)
 # define F_MINUS			(1 << 3)
-# define F_SPACE			(1 << 4)
+# define F_ZERO				(1 << 4)
 # define LM_LONG			(1 << 5)
 # define LM_LONG2			(1 << 6)
 # define LM_SHORT			(1 << 7)
@@ -115,7 +115,6 @@ void			pf_putwchar(t_printf *p, unsigned int wc, int wlen, int n);
 void			print_pointer_address(t_printf *p);
 void			color(t_printf *p);
 void			pf_putdouble(t_printf *p);
-void			ldtoa_fill(double n, t_printf *p);
 
 /*
 ** misc

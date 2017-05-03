@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:22:38 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 09:52:49 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -803,17 +803,18 @@ j = printf("{%s}", 0);
 	printf(" -> %d for my PF\n", i);
 	j = printf("{%30S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
 	printf(" -> %d for LIBC PF\n", j);
-
-	
-*/
-
 printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B\")\n");
 	i = ft_printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
 	printf(" -> %d for my PF\n", i);
 	j = printf("{%030S}", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
 	printf(" -> %d for LIBC PF\n", j);
+	
+*/
 
 
+
+ft_printf("%05d\n", 42);
+printf("%05d\n", 42);
 
 	/*
 

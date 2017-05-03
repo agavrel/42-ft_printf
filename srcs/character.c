@@ -6,20 +6,28 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:56 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 09:01:26 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 10:03:06 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_printf.h"
 
+/*
+** 32 is ascii for space and 48 for 0, flag 0 is 16 bits if set.
+*/
+
 void	padding(t_printf *p, int n)
 {
-	if (!n && !(p->f & F_MINUS))
-		while (p->padding--)
-			buffer(p, (p->f & F_ZERO) ? "0" : " ", 1);
-	else if (n && (p->f & F_MINUS))
-		while (p->padding--)
-			buffer(p, (p->f & F_ZERO) ? "0" : " ", 1);
+	if (p->padding)
+	{
+		p->c = 32 | (p->f & F_ZERO);
+		if (!n && !(p->f & F_MINUS))
+			while (p->padding--)
+				buffer(p, &p->c, 1);	
+		else if (n && (p->f & F_MINUS))
+			while (p->padding--)
+				buffer(p, &p->c, 1);
+	}
 }
 
 /*
