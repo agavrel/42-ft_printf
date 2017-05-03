@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 11:11:57 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 15:53:13 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@
 # define F_PLUS				(1 << 2)
 # define F_MINUS			(1 << 3)
 # define F_ZERO				(1 << 4)
-# define F_LONG				(1 << 5)
-# define F_LONG2			(1 << 6)
-# define F_SHORT			(1 << 7)
-# define F_SHORT2			(1 << 8)
-# define F_INTMAX			(1 << 9)
-# define F_SIZE_T			(1 << 10)
-# define F_MIN_LEN			(1 << 11)
-# define F_APP_PRECI		(1 << 12)
+# define F_UPCASE			(1 << 5)
+# define F_SHORT			(1 << 6)
+# define F_SHORT2			(1 << 7)	
+# define F_LONG				(1 << 8)
+# define F_LONG2			(1 << 9)
+# define F_INTMAX			(1 << 10)
+# define F_SIZE_T			(1 << 11)
+# define F_MIN_LEN			(1 << 12)
+# define F_APP_PRECI		(1 << 13)
 # define PF_BUF_SIZE		64
 
 /*

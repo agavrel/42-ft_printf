@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 10:45:35 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/03 15:52:13 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,9 @@ void		parse_optionals(t_printf *p)
 	parse_flags(p);
 	(p->f & F_MINUS) ? p->f &= ~F_ZERO : 0;
 	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
-	if (ft_strchr("CDSUOBX", p->format[0]))
+	if (ft_strchr("CDSUOB", p->format[0]))
 		p->f |= F_LONG;
+	else if (p->format[0] == 'X')
+		p->f |= F_UPCASE;
 	conversion_specifier(p);
 }
