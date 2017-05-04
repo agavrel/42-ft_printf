@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 13:53:32 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 22:50:00 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,16 @@ static int	ft_strchr_index_2(char *s, int c)
 
 static void	conversion_specifier(t_printf *p)
 {
-	p->printed = 0;
-	if (ft_strchr("oOuUbBxX", p->format[0]))
-		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->format[0]) << 1, p);
+	if (p->format[0] == 's')
+		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
 	else if (ft_strchr("dDi", p->format[0]))
 		pf_putnb(p);
+	else if (p->format[0] == 'f' || p->format[0] == 'F')
+		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
+	else if (ft_strchr("oOuUbBxX", p->format[0]))
+		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->format[0]) << 1, p);
 	else if (p->format[0] == 'c' || p->format[0] == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
-	else if (p->format[0] == 's')
-		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
 	else if (p->format[0] == 'S')
 		pf_putwstr(p);
 	else if (p->format[0] == 'p')
@@ -165,9 +166,7 @@ static void	conversion_specifier(t_printf *p)
 	else if (p->format[0] == 'n')
 		*va_arg(p->ap, int *) = p->len;
 	else if (p->format[0] == 'm')
-		ft_printf_putstr(strerror(errno), p);
-	else if (p->format[0] == 'f' || p->format[0] == 'F')
-		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
+		pf_puterror(strerror(errno), p);
 	else if (p->format[0] == '{')
 		color(p);
 	else

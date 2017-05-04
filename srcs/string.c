@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 13:58:47 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 22:51:53 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** nb_bytes <= MB_CUR_MAX define in stdlib.h
 */
 
-void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
+static void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 {
 	char	tmp[4];
 
@@ -50,17 +50,35 @@ void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 }
 
 /*
+** prints string and returns its len, if no len will print (null) and return 6
+*/
+
+void		pf_puterror(char *s, t_printf *p)
+{
+	if (!s)
+	{
+		if (!(p->f & F_ZERO))
+			buffer(p, "(null)", 6);
+		else
+			while (p->min_length--)
+				buffer(p, "0", 1);
+	}
+	else
+		buffer(p, s, ft_strlen(s));
+}
+
+/*
 ** print wide string and returns total len
 ** please refer to libft for ft_wcharlen and ft_wstrlen
 */
 
-void	pf_putwstr(t_printf *p)
+void		pf_putwstr(t_printf *p)
 {
 	wchar_t		*s;
 	int			charlen;
 
 	if (!(s = va_arg(p->ap, wchar_t *)))
-		buffer(p, "(null)", 6);
+		pf_puterror(0, p);
 	else
 	{
 		p->printed = (int)(ft_wstrlen((unsigned *)s));
@@ -85,41 +103,33 @@ void	pf_putwstr(t_printf *p)
 ** print regular string and returns its len
 */
 
-void	pf_putstr(t_printf *p)
+void		pf_putstr(t_printf *p)
 {
 	unsigned	*s;
-	int			len;
 
 	if (!(s = va_arg(p->ap, unsigned*)))
-		ft_printf_putstr((char *)s, p);
+		pf_puterror(0, p);
 	else
 	{
-		len = (int)(ft_strlen((char*)s));
+		p->printed = (int)(ft_strlen((char*)s));
 		if (p->f & F_APP_PRECI)
-			len = len > p->precision ? p->precision : len;
-		p->padding = (p->min_length - len) > 0 ? (p->min_length - len) : 0;
-		padding(p, 0);
-		buffer(p, s, len);
-		padding(p, 1);
+			p->printed = p->printed > p->precision ? p->precision : p->printed;
+		if ((p->padding = (p->min_length - p->printed)) > 0)
+		{
+			p->c = 32 | (p->f & F_ZERO);
+			if (!(p->f & F_MINUS))
+				while (p->padding--)
+					buffer(p, &p->c, 1);
+			else
+			{
+				buffer(p, s, p->printed);
+				while (p->padding--)
+					buffer(p, &p->c, 1);
+				return ;
+			}
+		}
+		buffer(p, s, p->printed);
 	}
-}
-
-/*
-** prints string and returns its len, if no len will print (null) and return 6
-*/
-
-void	ft_printf_putstr(char *s, t_printf *p)
-{
-	if (!s)
-	{
-		if (!(p->f & F_ZERO))
-			buffer(p, "(null)", 6);
-		else
-			while (p->min_length--)
-				buffer(p, "0", 1);
-	}
-	else
-		buffer(p, s, (int)ft_strlen(s));
 }
 
 /*
@@ -127,7 +137,7 @@ void	ft_printf_putstr(char *s, t_printf *p)
 ** refer to libft for putwchar amd wcharlen functions
 */
 
-void	pf_character(t_printf *p, unsigned c)
+void		pf_character(t_printf *p, unsigned c)
 {
 	p->printed = (p->f & F_LONG || p->f & F_LONG2) ? ft_wcharlen(c) : 1;
 	if ((p->padding = p->min_length - p->printed) < 0)

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 13:59:56 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 22:50:47 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void			pf_putnb_base(int base, t_printf *p);
 void			itoa_printf(intmax_t d, t_printf *p);
 void			itoa_base_printf(uintmax_t d, int b, t_printf *p);
 void			itoa_base_fill(uintmax_t tmp, int base, char *str, t_printf *p);
+void			pf_putdouble(t_printf *p);
 
 /*
 ** --------------------------- number related functions ------------------------
@@ -100,9 +101,7 @@ void			itoa_base_fill(uintmax_t tmp, int base, char *str, t_printf *p);
 void			pf_putstr(t_printf *p);
 void			pf_putwstr(t_printf *p);
 void			pf_character(t_printf *p, unsigned c);
-void			ft_printf_putstr(char *s, t_printf *p);
-void			pf_putwchar(t_printf *p, unsigned int wc, int wlen, int n);
-void			pf_putdouble(t_printf *p);
+void			pf_puterror(char *s, t_printf *p);
 
 /*
 ** --------------------------- miscellaneous functions -------------------------
