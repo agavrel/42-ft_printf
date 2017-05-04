@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:17:48 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:57:04 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	itoa_printf(intmax_t n, t_printf *p)
 	uintmax_t	tmp;
 
 	len = 0;
-	tmp = ABS(n);
+	tmp = n < 0 ? -n : n;
 	while (tmp)
 	{
 		tmp /= 10;
@@ -80,12 +80,12 @@ void	itoa_printf(intmax_t n, t_printf *p)
 	}
 	if ((n < 0 || p->f & F_PLUS || p->f & F_SPACE) && p->f & F_ZERO)
 		--p->precision;
-	p->printed = MAX(len, p->precision);
+	p->printed = len > p->precision ? len : p->precision;
 	if (n < 0 || p->f & F_PLUS || p->f & F_SPACE)
 		++p->printed;
 	p->padding = (p->printed > p->min_length) ? 0 : p->min_length - p->printed;
 	padding(p, 0);
-	tmp = ABS(n);
+	tmp = n < 0 ? -n : n;
 	itoa_base_fill(tmp, 10, s, p);
 	(p->f & F_SPACE) ? s[0] = ' ' : 0;
 	(n < 0) ? s[0] = '-' : 0;
@@ -110,10 +110,12 @@ void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 		tmp /= b;
 	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
 	ext = (p->printed >= p->precision) ? 0 : 1;
-	p->printed = MAX(p->precision, p->printed);
+	if (p->precision > p->printed)
+		p->printed = p->precision;
 	((p->f & F_SHARP) && b == 8 && !ext) ? --p->min_length : 0;
 	((p->f & F_SHARP) && b == 16 && !(p->f & F_ZERO)) ? p->min_length -= 2 : 0;
-	p->padding = MAX(0, (p->min_length - p->printed));
+	if ((p->padding = (p->min_length - p->printed)) < 0)
+		p->padding = 0;
 	padding(p, 0);
 	if ((n || (p->f & F_POINTER))
 		&& (p->f & F_SHARP) && ((b == 8 && !ext) || (b == 16)))

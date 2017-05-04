@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 16:33:56 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:58:47 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,25 @@ void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 void	pf_putwstr(t_printf *p)
 {
 	wchar_t		*s;
-	int			wlen;
 	int			charlen;
 
 	if (!(s = va_arg(p->ap, wchar_t *)))
 		buffer(p, "(null)", 6);
 	else
 	{
-		wlen = (int)(ft_wstrlen((unsigned *)s));
-		(p->f & F_APP_PRECI) ? wlen = MIN(p->precision, wlen) : 0;
-		p->padding = MAX(p->min_length - wlen, 0);
+		p->printed = (int)(ft_wstrlen((unsigned *)s));
+		if (p->f & F_APP_PRECI)
+			p->printed = p->printed > p->precision ? p->precision : p->printed;
+		if ((p->padding = (p->min_length - p->printed)) < 0)
+			p->padding = 0;
 		p->f = (p->min_length > p->precision) ?
 			p->f & ~F_APP_PRECI : p->f | F_APP_PRECI;
 		padding(p, 0);
 		charlen = 0;
-		while ((p->c = *s++) && (wlen -= charlen) > 0)
+		while ((p->c = *s++) && (p->printed -= charlen) > 0)
 		{
 			charlen = ft_wcharlen(p->c);
-			pf_putwchar(p, p->c, wlen, charlen);
+			pf_putwchar(p, p->c, p->printed, charlen);
 		}
 		padding(p, 1);
 	}
@@ -94,7 +95,8 @@ void	pf_putstr(t_printf *p)
 	else
 	{
 		len = (int)(ft_strlen((char*)s));
-		(p->f & F_APP_PRECI) ? len = MIN(p->precision, len) : 0;
+		if (p->f & F_APP_PRECI)
+			len = len > p->precision ? p->precision : len;
 		p->padding = (p->min_length - len) > 0 ? (p->min_length - len) : 0;
 		padding(p, 0);
 		buffer(p, s, len);

@@ -6,29 +6,21 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:16:46 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:59:56 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# define MAX(a, b)		b & ((a - b) >> 31) | a & (~(a - b) >> 31)
-# define MIN(a, b)		a & ((a - b) >> 31) | b & (~(a - b) >> 31)
-# define ABS(a)			(a < 0) ? -a : a
-# define COLOR(s,n)		ft_putstr(s), (p->format += n)
-# define PF_RED			"\033[31m"
-# define PF_GREEN		"\033[32m"
-# define PF_YELLOW		"\033[33m"
-# define PF_BLUE		"\033[34m"
-# define PF_PURPLE		"\033[35m"
-# define PF_CYAN		"\033[36m"
-# define PF_EOC			"\033[36m"
-# define PF_BUF_SIZE	64
+/*
+** --------------------------- Librairies --------------------------------------
+*/
 
 # include "libft.h"
 # include <stdarg.h>
 # include <errno.h>
+# define PF_BUF_SIZE	64
 
 /*
 ** --------------------------- Masks Definition --------------------------------
@@ -52,7 +44,16 @@
 # define F_POINTER		(1 << 15)
 
 /*
-** f stands for flag, listed above
+** --------------------------- ft_printf variables -----------------------------
+** A) Printf writes the output and then returns the len (int)
+** B) f stands for flag, defined above and extensively described in parsing.c
+** C) min_length (digit after %) and precision (. after %) ~ parsing.c
+** D) padding is the resulting from C and the output length.
+** E) printed is the temporary len of chars to be send to the buffer
+** F) fd is the file descriptor. 1 for ft_printf and can be any with ft_dprintf
+** G) buffer_index and buff are related to the buffer function ~ buffer.c
+** H) the variadic list (va_list ap) and the format are stored in the structure
+** I) c is a temp char (as unsigned int) in order to have a single declaration
 */
 
 typedef struct	s_printf
@@ -72,26 +73,17 @@ typedef struct	s_printf
 }				t_printf;
 
 /*
-** main program
+** --------------------------- ft_printf main functions ------------------------
 */
 
 int				ft_printf(const char *format, ...);
 int				ft_dprintf(int fd, const char *format, ...);
-
-/*
-** parsing optional parameters
-*/
-
 void			parse_optionals(t_printf *p);
-
-/*
-** parsing conversion specifier
-*/
-
 void			cs_not_found(t_printf *p);
 
 /*
-** number related functions
+** --------------------------- number related functions ------------------------
+** %d %D %i %f %F %b %B %o %O %u %U %h %H
 */
 
 void			pf_putnb(t_printf *p);
@@ -101,7 +93,8 @@ void			itoa_base_printf(uintmax_t d, int b, t_printf *p);
 void			itoa_base_fill(uintmax_t tmp, int base, char *str, t_printf *p);
 
 /*
-** strings and characters related functions
+** --------------------------- number related functions ------------------------
+**  %s %S %c %C
 */
 
 void			pf_putstr(t_printf *p);
@@ -109,21 +102,30 @@ void			pf_putwstr(t_printf *p);
 void			pf_character(t_printf *p, unsigned c);
 void			ft_printf_putstr(char *s, t_printf *p);
 void			pf_putwchar(t_printf *p, unsigned int wc, int wlen, int n);
-
-/*
-** bonus
-*/
-
-void			print_pointer_address(t_printf *p);
-void			color(t_printf *p);
 void			pf_putdouble(t_printf *p);
 
 /*
-** misc
+** --------------------------- miscellaneous functions -------------------------
 */
 
-int				ft_strchr_index(char *s, int c);
 void			buffer(t_printf *p, void *new, size_t size);
 void			padding(t_printf *p, int n);
+void			print_pointer_address(t_printf *p);
+int				ft_strchr_index(char *s, int c);
+
+/*
+** --------------------------- colors related function -------------------------
+**  %{red} %{green} %{yellow} %{blue} %{purple} %{cyan} %{eoc}
+*/
+
+void			color(t_printf *p);
+
+# define PF_RED			"\033[31m"
+# define PF_GREEN		"\033[32m"
+# define PF_YELLOW		"\033[33m"
+# define PF_BLUE		"\033[34m"
+# define PF_PURPLE		"\033[35m"
+# define PF_CYAN		"\033[36m"
+# define PF_EOC			"\033[36m"
 
 #endif

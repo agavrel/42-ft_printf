@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 15:55:33 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 10:54:03 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 13:36:19 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,26 @@ int				ft_strchr_index(char *s, int c)
 
 void			color(t_printf *p)
 {
-	p->printed = 5;
-	if (!ft_strncmp(p->format, "{red}", ft_strlen("{red}")))
-		COLOR(PF_RED, 5);
-	else if (!ft_strncmp(p->format, "{green}", ft_strlen("{green}")))
-		COLOR(PF_GREEN, 7);
-	else if (!ft_strncmp(p->format, "{yellow}", ft_strlen("{yellow}")))
-		COLOR(PF_YELLOW, 8);
-	else if (!ft_strncmp(p->format, "{blue}", ft_strlen("{blue}")))
-		COLOR(PF_BLUE, 6);
-	else if (!ft_strncmp(p->format, "{purple}", ft_strlen("{purple}")))
-		COLOR(PF_PURPLE, 8);
-	else if (!ft_strncmp(p->format, "{cyan}", ft_strlen("{cyan}")))
-		COLOR(PF_CYAN, 6);
-	else if (!ft_strncmp(p->format, "{eoc}", ft_strlen("{eoc}")))
-		COLOR(PF_EOC, 5);
+	int	len;
+
+	if (!ft_strncmp(p->format, "{red}", (len = ft_strlen("{red}"))))
+		buffer(p, PF_RED, len);
+	else if (!ft_strncmp(p->format, "{green}", (len = ft_strlen("{green}"))))
+		buffer(p, PF_GREEN, len);
+	else if (!ft_strncmp(p->format, "{yellow}", (len = ft_strlen("{yellow}"))))
+		buffer(p, PF_YELLOW, len);
+	else if (!ft_strncmp(p->format, "{blue}", (len = ft_strlen("{blue}"))))
+		buffer(p, PF_BLUE, len);
+	else if (!ft_strncmp(p->format, "{purple}", (len = ft_strlen("{purple}"))))
+		buffer(p, PF_PURPLE, len);
+	else if (!ft_strncmp(p->format, "{cyan}", (len = ft_strlen("{cyan}"))))
+		buffer(p, PF_CYAN, len);
+	else if (!ft_strncmp(p->format, "{eoc}", (len = ft_strlen("{eoc}"))))
+		buffer(p, PF_EOC, len);
 	else
-		p->printed = 0;
-	p->len += p->printed;
-	--p->format;
+		len = 0;
+	p->format += len - 1;
+	p->len += len;
 }
 
 static double	ft_dabs(double n)
@@ -93,7 +94,7 @@ static void		ldtoa_fill(double n, t_printf *p, long value)
 		value /= 10;
 	}
 	(p->precision > 0) ? s[len] = '.' : 0;
-	value = (long)(ABS(n));
+	value = (long)(n < 0 ? -n : n);
 	while (++accuracy < len)
 	{
 		s[len - accuracy - 1] = value % 10 + '0';
@@ -119,7 +120,7 @@ void			pf_putdouble(t_printf *p)
 	if (!(p->f & F_APP_PRECI))
 		p->precision = 6;
 	len = (p->precision > 0) ? 1 : 0;
-	tmp = (long)(ABS(n));
+	tmp = (long)(n < 0 ? -n : n);
 	while (tmp && ++len)
 		tmp /= 10;
 	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
