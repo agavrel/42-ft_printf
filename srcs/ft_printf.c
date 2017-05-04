@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 17:18:30 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/04 23:39:46 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int		ft_printf(const char *format, ...)
 	p.fd = 1;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (p.format[0])
+	while (*p.format)
 	{
-		if (p.format[0] == '%')
+		if (*p.format == '%')
 		{
 			++p.format;
-			if (!p.format[0] || (p.format[0] == ' ' && (!p.format[1]
+			if (!*p.format || (*p.format == ' ' && (!p.format[1]
 			|| (!p.format[2] && p.format[1] == 'h'))))
 				break ;
 			else
 				parse_optionals(&p);
 		}
 		else
-			buffer(&p, &p.format[0], 1);
+			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
 	write(p.fd, p.buff, p.buffer_index);
@@ -56,19 +56,19 @@ int		ft_dprintf(int fd, const char *format, ...)
 	p.fd = fd;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (p.format[0])
+	while (*p.format)
 	{
-		if (p.format[0] == '%')
+		if (*p.format == '%')
 		{
 			++p.format;
-			if (!p.format[0] || (p.format[0] == ' ' && (!p.format[1]
+			if (!*p.format || (*p.format == ' ' && (!p.format[1]
 			|| (!p.format[2] && p.format[1] == 'h'))))
 				break ;
 			else
 				parse_optionals(&p);
 		}
 		else
-			buffer(&p, &p.format[0], 1);
+			buffer(&p, p.format, 1);
 		++p.format;
 	}
 	write(p.fd, p.buff, p.buffer_index);
