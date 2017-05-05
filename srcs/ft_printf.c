@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:49:33 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 00:24:11 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		ft_printf(const char *format, ...)
 			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
-	if (p.len < 0)
-		write(p.fd, p.buff, p.buffer_index - p.i);
+	(p.len < 0) ? write(p.fd, p.buff, p.buffer_index - p.i)
+		: write(p.fd, p.buff, p.buffer_index);
 	va_end(p.ap);
 	return (p.len);
 }
@@ -72,8 +72,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
-	if (p.len < 0)
-		write(p.fd, p.buff, p.buffer_index - p.i);
+	write(p.fd, p.buff, p.buffer_index - p.i);
 	va_end(p.ap);
 	return (p.len);
 }

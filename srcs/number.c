@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 20:03:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 13:57:04 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 00:34:29 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	pf_putnb(t_printf *p)
 {
 	intmax_t	n;
 
+	p->printed = 0;
 	if (p->f & F_LONG || p->f & F_LONG2)
 		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, long long)) :
 			((intmax_t)va_arg(p->ap, long));
@@ -46,6 +47,7 @@ void	pf_putnb_base(int base, t_printf *p)
 {
 	uintmax_t	n;
 
+	p->printed = 0;
 	if (p->f & F_LONG || p->f & F_LONG2)
 		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, unsigned long long)) :
 			((intmax_t)va_arg(p->ap, unsigned long));
@@ -61,26 +63,20 @@ void	pf_putnb_base(int base, t_printf *p)
 	itoa_base_printf(n, base, p);
 }
 
-/*
-** transforms int n into char *s
-*/
-
 void	itoa_printf(intmax_t n, t_printf *p)
 {
 	char		s[21];
-	int			len;
 	uintmax_t	tmp;
 
-	len = 0;
 	tmp = n < 0 ? -n : n;
 	while (tmp)
 	{
 		tmp /= 10;
-		++len;
+		++p->printed;
 	}
 	if ((n < 0 || p->f & F_PLUS || p->f & F_SPACE) && p->f & F_ZERO)
 		--p->precision;
-	p->printed = len > p->precision ? len : p->precision;
+	p->printed = p->printed > p->precision ? p->printed : p->precision;
 	if (n < 0 || p->f & F_PLUS || p->f & F_SPACE)
 		++p->printed;
 	p->padding = (p->printed > p->min_length) ? 0 : p->min_length - p->printed;
@@ -94,25 +90,21 @@ void	itoa_printf(intmax_t n, t_printf *p)
 	padding(p, 1);
 }
 
-/*
-** same as above for any base
-*/
-
 void	itoa_base_printf(uintmax_t n, int b, t_printf *p)
 {
 	uintmax_t	tmp;
 	char		s[21];
 	int			ext;
 
-	p->printed = 0;
 	tmp = n;
 	while (tmp && ++p->printed)
 		tmp /= b;
 	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
 	ext = (p->printed >= p->precision) ? 0 : 1;
-	if (p->precision > p->printed)
-		p->printed = p->precision;
+	p->printed = p->precision > p->printed ? p->precision : p->printed;
 	((p->f & F_SHARP) && b == 8 && !ext) ? --p->min_length : 0;
+	((p->f & F_SHARP) && b == 8 && !n && (p->f & F_APP_PRECI)) ?
+	++p->printed : 0;
 	((p->f & F_SHARP) && b == 16 && !(p->f & F_ZERO)) ? p->min_length -= 2 : 0;
 	if ((p->padding = (p->min_length - p->printed)) < 0)
 		p->padding = 0;
@@ -137,6 +129,9 @@ void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE], t_printf *p)
 {
 	int		len;
 
+	if (tmp && !(p->f & F_POINTER) && (p->f & F_ZERO) && (p->f & F_SHARP) &&
+	b == 16 && !(p->f & F_LONG2) && p->printed > 3)
+		p->printed -= 2;
 	len = p->printed;
 	p->c = 'a' - 10 - ((p->f & F_UPCASE) >> 1);
 	while (len--)

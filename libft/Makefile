@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/12 13:55:55 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/05 20:57:54 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/06 00:26:50 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC = ft_atoi_incr.c \
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(LIBFILES)
 	@gcc $(FLAGS) -c $(SRC) -I $(HEADER)
 	@ar rc $(NAME) $(LIBFILES)
 	@ranlib $(NAME)
