@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:46:11 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 01:28:13 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void			pf_puterror(char *s, t_printf *p);
 void			buffer(t_printf *p, void *new, size_t size);
 void			padding(t_printf *p, int n);
 void			print_pointer_address(t_printf *p);
-int				ft_strchr_index(char *s, int c);
 
 /*
 ** --------------------------- colors related function -------------------------

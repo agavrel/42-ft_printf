@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:17:15 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 01:25:27 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -822,6 +822,7 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 
 
 	//ft_printf("\n%X\n", WCHAR_MAX);
+
 
 	i = ft_printf("blabla%d blabla %C", 5, 1334567); // a revoir
 	printf(" -> %d for my PF\n", i);

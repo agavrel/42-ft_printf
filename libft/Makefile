@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/12 13:55:55 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/06 00:54:52 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/06 01:28:45 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = ft_atoi_incr.c \
 	  ft_strlen.c \
 	  ft_strncmp.c \
 	  ft_wcharlen.c \
+	  ft_strchr_index.c \
 	  ft_wstrlen.c
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:51:57 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 01:16:53 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,8 @@ void		parse_optionals(t_printf *p)
 			p->f |= F_INTMAX;
 		else if (*p->format == 'z')
 			p->f |= F_SIZE_T;
+		else if (*p->format == 'L')
+			p->f |= F_LONG2;
 		else
 			break ;
 		++p->format;

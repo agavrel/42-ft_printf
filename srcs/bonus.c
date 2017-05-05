@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 15:55:33 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 20:31:19 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 01:27:31 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,6 @@
 **   4) {}  color
 **   5) fF  ldtoa
 */
-
-/*
-** returns position of a character in a string
-*/
-
-int				ft_strchr_index(char *s, int c)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		++i;
-	}
-	return (-1);
-}
 
 /*
 ** bonus function that handles colors
