@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 20:22:45 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:46:11 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_printf
 	va_list		ap;
 	char		*format;
 	unsigned	c;
+	int			i;
 }				t_printf;
 
 /*

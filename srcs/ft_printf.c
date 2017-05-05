@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 21:18:19 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:49:33 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_printf(const char *format, ...)
 	p.fd = 1;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (*p.format)
+	while (*p.format && p.len > -1)
 	{
 		if (*p.format == '%')
 		{
@@ -35,11 +35,12 @@ int		ft_printf(const char *format, ...)
 			else
 				parse_optionals(&p);
 		}
-		else
+		else if (++p.i)
 			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
-	write(p.fd, p.buff, p.buffer_index);
+	if (p.len < 0)
+		write(p.fd, p.buff, p.buffer_index - p.i);
 	va_end(p.ap);
 	return (p.len);
 }
@@ -56,7 +57,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 	p.fd = fd;
 	p.format = (char *)format;
 	va_start(p.ap, format);
-	while (*p.format)
+	while (*p.format && p.len > -1)
 	{
 		if (*p.format == '%')
 		{
@@ -67,11 +68,12 @@ int		ft_dprintf(int fd, const char *format, ...)
 			else
 				parse_optionals(&p);
 		}
-		else
-			buffer(&p, p.format, 1);
+		else if (++p.i)
+			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
-	write(p.fd, p.buff, p.buffer_index);
+	if (p.len < 0)
+		write(p.fd, p.buff, p.buffer_index - p.i);
 	va_end(p.ap);
 	return (p.len);
 }

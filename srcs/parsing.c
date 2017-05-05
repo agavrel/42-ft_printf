@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 21:14:41 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:51:57 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ static int	ft_strchr_index_2(char *s, int c)
 
 static void	conversion_specifier(t_printf *p)
 {
-	p->c = *p->format;
+	if (ft_strchr_index("CDSUOBX", p->c) > -1)
+		p->f |= (p->c != 'X') ? F_LONG : F_UPCASE;
 	if (p->c == 's')
 		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
 	else if (p->c == 'd' || p->c == 'i' || p->c == 'D')
@@ -172,6 +173,7 @@ static void	conversion_specifier(t_printf *p)
 		color(p);
 	else
 		cs_not_found(p);
+	p->len > 0 ? p->i = 0 : 0;
 }
 
 /*
@@ -203,13 +205,10 @@ void		parse_optionals(t_printf *p)
 		else if (*p->format == 'z')
 			p->f |= F_SIZE_T;
 		else
-			break;
+			break ;
 		++p->format;
 	}
 	parse_flags(p);
-	if (ft_strchr_index("CDSUOB", *p->format) > -1)
-		p->f |= F_LONG;
-	else if (*p->format == 'X')
-		p->f |= F_UPCASE;
+	p->c = *p->format;
 	conversion_specifier(p);
 }

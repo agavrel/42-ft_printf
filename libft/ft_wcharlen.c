@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 00:03:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 07:42:23 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:21:48 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ size_t	ft_wcharlen(unsigned wc)
 		return (2);
 	else if (wc < 0x10000)
 		return (3);
-	return (4);
+	else if (wc < 0xE0080)
+		return (4);
+	return (0);
 }

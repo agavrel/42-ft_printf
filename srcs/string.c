@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 22:51:53 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:50:39 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,11 @@ void		pf_putstr(t_printf *p)
 
 void		pf_character(t_printf *p, unsigned c)
 {
-	p->printed = (p->f & F_LONG || p->f & F_LONG2) ? ft_wcharlen(c) : 1;
+	if ((p->f & F_LONG || p->f & F_LONG2) && !(p->printed = ft_wcharlen(c))
+			&& !(p->padding = 0))
+		p->len = -1;
+	else
+		p->printed = 1;
 	if ((p->padding = p->min_length - p->printed) < 0)
 		p->padding = 0;
 	padding(p, 0);

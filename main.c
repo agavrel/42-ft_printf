@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 13:59:03 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 23:17:15 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <limits.h>
 # include <stdio.h>
 # include <locale.h>
+#include <wchar.h>
 
 int		main(int ac, char **av)
 {
@@ -803,10 +804,6 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	ft_dprintf("%05d\n", 42);
 	dprintf("%05d\n", 42);
 
-	i = ft_printf("blabla%d blabla %C", 5, 1334567); // a revoir
-	printf(" -> %d for my PF\n", i);
-	j = printf("blabla%d blabla %C", 5, 1234567);
-	printf(" -> %d for LIBC PF\n", j);
 
 	printf("\nprintf(\"%%*d\", 5, 42);\n");
 	i = ft_printf("%*d", 5, 42);
@@ -814,14 +811,23 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	j = printf("%*d", 5, 42);
 	printf(" -> %d for LIBC PF\n", j);    
 
-*/
-
-	
-	i = ft_printf("{%05.*d}", -15, 42);
+		i = ft_printf("{%05.*d}", -15, 42);
 	printf(" -> %d for my PF\n", i);
 	j = printf("{%05.*d}", -15, 42);
 	printf(" -> %d for LIBC PF\n", j);
   
+
+
+*/
+
+
+	//ft_printf("\n%X\n", WCHAR_MAX);
+
+	i = ft_printf("blabla%d blabla %C", 5, 1334567); // a revoir
+	printf(" -> %d for my PF\n", i);
+	j = printf("blabla%d blabla %C", 5, 1234567);
+	printf(" -> %d for LIBC PF\n", j);
+
 
 
 	/*
