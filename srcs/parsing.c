@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:16:05 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/04 23:37:46 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/05 21:14:41 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static void	field_width_precision(t_printf *p)
 {
 	if (48 < *p->format && *p->format < 58)
 	{
-		if ((p->min_length = ft_atoi(p->format)) < 1)
+		if ((p->min_length = ft_atoi_incr(p->format)) < 1)
 			p->min_length = 1;
 		while (47 < *p->format && *p->format < 58)
 			++p->format;
 	}
 	if (*p->format == '.' && ++p->format)
 	{
-		if ((p->precision = ft_atoi(p->format)) < 0)
+		if ((p->precision = ft_atoi_incr(p->format)) < 0)
 			p->precision = 0;
 		while (47 < *p->format && *p->format < 58)
 			++p->format;
@@ -152,11 +152,11 @@ static void	conversion_specifier(t_printf *p)
 	p->c = *p->format;
 	if (p->c == 's')
 		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
-	else if (ft_strchr("dDi", p->c))
+	else if (p->c == 'd' || p->c == 'i' || p->c == 'D')
 		pf_putnb(p);
 	else if (p->c == 'f' || p->c == 'F')
 		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
-	else if (ft_strchr("oOuUbBxX", p->c))
+	else if (ft_strchr_index("oOuUbBxX", p->c) > -1)
 		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->c) << 1, p);
 	else if (p->c == 'c' || p->c == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
@@ -192,7 +192,7 @@ void		parse_optionals(t_printf *p)
 	p->precision = 1;
 	parse_flags(p);
 	field_width_precision(p);
-	while (ft_strchr("hljzL", *p->format))
+	while (1)
 	{
 		if (*p->format == 'h')
 			p->f |= (p->format[1] == 'h' && ++p->format) ? F_SHORT2 : F_SHORT;
@@ -202,10 +202,12 @@ void		parse_optionals(t_printf *p)
 			p->f |= F_INTMAX;
 		else if (*p->format == 'z')
 			p->f |= F_SIZE_T;
+		else
+			break;
 		++p->format;
 	}
 	parse_flags(p);
-	if (ft_strchr("CDSUOB", *p->format))
+	if (ft_strchr_index("CDSUOB", *p->format) > -1)
 		p->f |= F_LONG;
 	else if (*p->format == 'X')
 		p->f |= F_UPCASE;
