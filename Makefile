@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/28 18:36:22 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/06 00:55:10 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/06 06:03:17 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,11 @@ DIR_O = obj
 HEADER = incl
 
 SOURCES = ft_printf.c \
-			parsing.c \
-			number.c \
-			string.c \
-			bonus.c \
-			buffer.c
+			pf_parsing.c \
+			pf_number.c \
+			pf_string.c \
+			pf_bonus.c \
+			pf_buffer.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

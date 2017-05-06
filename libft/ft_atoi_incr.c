@@ -6,13 +6,13 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 20:58:34 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:52:38 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 05:47:01 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi_incr(char *s)
+int		ft_atoi(char *s)
 {
 	int		sign;
 	long	r;
