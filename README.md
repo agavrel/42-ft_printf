@@ -19,12 +19,12 @@ Bonus:
 * 5) ft_printf_putstr(strerror(errno), p) with %m
 * 6) colors with '{' and '}'
 * 7) %f and %F to print double
-* 8) At 125% of libc printf speed thanks to buffer addition and functions' optimization.
+* 8) <strong>At 125% of libc printf speed</strong> thanks to buffer addition and functions' optimization.
 
 ## Sources
 * https://linux.die.net/man/3/printf
 
-## Installation
+## Installation & Tests
 ```
 $> make
 $> gcc libftprintf.a srcs/main.c && ./a.out
