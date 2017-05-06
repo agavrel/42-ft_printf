@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 19:31:22 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/05 23:50:39 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 02:06:30 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		pf_puterror(char *s, t_printf *p)
 ** print wide string and returns total len
 ** please refer to libft for ft_wcharlen and ft_wstrlen
 */
-
+#include <stdio.h>
 void		pf_putwstr(t_printf *p)
 {
 	wchar_t		*s;
