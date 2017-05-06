@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 18:29:58 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 05:47:42 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 15:46:32 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 size_t				ft_strlen(const char *str);
 int					ft_strchr_index(char *s, int c);
-int					ft_atoi(char *s);
+int					ft_atoi(char **s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memchr(const void *mem, const unsigned char c,
 										size_t n);

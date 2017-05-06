@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 01:28:13 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 15:56:12 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct	s_printf
 	int			padding;
 	int			printed;
 	int			fd;
-	int			buffer_index;
+	size_t		buffer_index;
 	char		buff[PF_BUF_SIZE];
 	va_list		ap;
 	char		*format;

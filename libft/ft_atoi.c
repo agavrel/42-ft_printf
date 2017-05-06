@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angavrel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 12:45:04 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 12:45:13 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 15:48:07 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(char *s)
+int		ft_atoi(char **s)
 {
 	int		sign;
 	long	r;
 
 	r = 0;
 	sign = 1;
-	if (*s == '-' || *s == '+')
-		sign = 44 - *s++;
-	while (*s >= '0' && *s <= '9')
-		r = r * 10 + *s++ - '0';
+	if (**s == '-' || **s == '+')
+		sign = 44 - *(*s++);
+	while (**s >= '0' && **s <= '9')
+		r = r * 10 + *(*s++) - '0';
 	return (sign * (int)r);
 }

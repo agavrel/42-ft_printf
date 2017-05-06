@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 06:05:18 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/06 16:04:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,38 +95,14 @@ static void	parse_flags(t_printf *p)
 static void	field_width_precision(t_printf *p)
 {
 	if (48 < *p->format && *p->format < 58)
-	{
-		if ((p->min_length = ft_atoi(p->format)) < 1)
+		if ((p->min_length = ft_atoi(&p->format)) < 1)
 			p->min_length = 1;
-		while (47 < *p->format && *p->format < 58)
-			++p->format;
-	}
 	if (*p->format == '.' && ++p->format)
 	{
-		if ((p->precision = ft_atoi(p->format)) < 0)
+		if ((p->precision = ft_atoi(&p->format)) < 0)
 			p->precision = 0;
-		while (47 < *p->format && *p->format < 58)
-			++p->format;
 		p->f |= F_APP_PRECI;
 	}
-}
-
-/*
-** returns position of a character in a string
-*/
-
-static int	ft_strchr_index_2(char *s, int c)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c || s[i] == c + 32)
-			return (i);
-		++i;
-	}
-	return (-1);
 }
 
 /*
@@ -157,8 +133,8 @@ static void	conversion_specifier(t_printf *p)
 		pf_putnb(p);
 	else if (p->c == 'f' || p->c == 'F')
 		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
-	else if (ft_strchr_index("oOuUbBxX", p->c) > -1)
-		pf_putnb_base(ft_strchr_index_2(".b..ou..x", p->c) << 1, p);
+	else if ((p->printed = ft_strchr_index("dDbBdDdDoOuUdDdDxX", p->c)) > -1)
+		pf_putnb_base(p->printed & ~1, p);
 	else if (p->c == 'c' || p->c == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
 	else if (p->c == 'S')

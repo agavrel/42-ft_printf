@@ -19,7 +19,7 @@ Bonus:
 * E) displaying errno with %m.
 * F) colors with '%{' (%{red}).
 * G) %f and %F to handle double and float numbers.
-* H) <strong>At 125% of libc printf speed</strong> thanks to buffer addition and functions' optimization.
+* H) <strong>At 140% of libc printf speed</strong> thanks to buffer addition and functions' optimization.
 
 ## Sources
 * https://linux.die.net/man/3/printf
