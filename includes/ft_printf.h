@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 14:02:40 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 15:15:51 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void			pf_putnb(t_printf *p);
 void			pf_putnb_base(int base, t_printf *p);
 void			itoa_printf(intmax_t d, t_printf *p, int len);
 void			itoa_base_printf(uintmax_t d, int b, t_printf *p);
-void			pf_putdouble(t_printf *p);
+void			pf_putdouble(t_printf *p, int n);
 
 /*
 ** --------------------------- number related functions ------------------------

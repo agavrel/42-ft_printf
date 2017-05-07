@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:21 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 14:01:10 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 16:12:11 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,34 +63,35 @@ static double	ft_dabs(double n)
 ** 10 power p->precision + 1 in order to get the rounding.
 */
 
-static void		ldtoa_fill(double n, t_printf *p, long value)
+static void		ldtoa_fill(double n, t_printf *p, long value, int b)
 {
 	int		len;
-	int		accuracy;
 	char	s[48];
 
+	p->c = 'a' - 10 - ((p->f & F_UPCASE) >> 1);
 	len = p->printed - 1 - p->precision;
-	accuracy = p->printed - 1 - len;
-	while (accuracy--)
+	while (p->precision--)
 	{
-		s[len + accuracy + 1] = value % 10 + '0';
-		value /= 10;
+		s[len + p->precision + 1] = value % b + ((value % b < 10) ? '0' : p->c);
+		value /= b;
 	}
-	(p->precision > 0) ? s[len] = '.' : 0;
+	s[len] = '.';
 	value = (long)(n < 0 ? -n : n);
-	while (++accuracy < len)
+	while (++p->precision < len)
 	{
-		s[len - accuracy - 1] = value % 10 + '0';
-		value /= 10;
+		s[len - p->precision - 1] = value % b + ((value % b < 10) ? '0' : p->c);
+		value /= b;
 	}
 	(p->f & F_APP_PRECI && p->f & F_ZERO) ? s[0] = ' ' : 0;
 	(p->f & F_SPACE) ? s[0] = ' ' : 0;
 	(n < 0) ? s[0] = '-' : 0;
 	(p->f & F_PLUS && n >= 0) ? s[0] = '+' : 0;
-	buffer(p, s, len + 1 + 6);
+	if (b == 16 && (p->len += 2))
+		buffer(p, "0x", 2);
+	buffer(p, s, p->printed);
 }
 
-void			pf_putdouble(t_printf *p)
+void			pf_putdouble(t_printf *p, int base)
 {
 	double		n;
 	long		tmp;
@@ -101,16 +102,15 @@ void			pf_putdouble(t_printf *p)
 	n = (double)va_arg(p->ap, double);
 	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
 	if (!(p->f & F_APP_PRECI))
-		p->precision = 6;
-	len = (p->precision > 0) ? 1 : 0;
+		p->precision = 6 + base - 10 + 1;
+	len = 1;
 	tmp = (long)(n < 0 ? -n : n);
 	while (tmp && ++len)
-		tmp /= 10;
-	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
+		tmp /= base;
 	p->printed = p->precision + len + ((n < 0) ? 1 : 0);
 	decimal = ft_dabs(n);
-	decimal = (decimal - (long)(ft_dabs(n))) * ft_pow(10, p->precision + 1);
-	decimal = ((long)decimal % 10 > 4) ? (decimal) / 10 + 1 : decimal / 10;
-	value = (int)decimal;
-	ldtoa_fill(n, p, value);
+	decimal = (decimal - (long)(ft_dabs(n))) * ft_pow(base, p->precision + 1);
+	decimal = ((long)decimal % base > 4) ? decimal / base + 1 : decimal / base;
+	value = (long)decimal;
+	ldtoa_fill(n, p, value, base);
 }

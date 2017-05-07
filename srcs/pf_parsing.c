@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 14:58:51 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 15:15:38 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,59 +90,34 @@ static void	parse_flags(t_printf *p)
 	}
 }
 
-static int		ft_atoic(char *s)
+static int	pf_atoi(char **s)
 {
+	int		sign;
 	long	r;
-	short	sign;
 
 	r = 0;
 	sign = 1;
-	if (*s == '-' || *s == '+')
-		sign = 44 - *s++;
-	while (*s >= '0' && *s <= '9')
-		r = r * 10 + *s++ - '0';
+	if (**s == '-' || **s == '+')
+		sign = 44 - *(*s)++;
+	while (**s >= '1' && **s <= '9')
+		r = r * 10 + *(*s)++ - '0';
 	return (sign * (int)r);
 }
-
-static void	field_width_precision(t_printf *p)
-{
-	if (48 < *p->format && *p->format < 58)
-	{
-		p->min_length = MAX(1, ft_atoic(p->format));
-		while (47 < *p->format && *p->format < 58)
-			++p->format;
-	}
-	if (*p->format == '.')
-	{
-		++p->format;
-		p->precision = MAX(ft_atoic(p->format), 0);
-		while (47 < *p->format && *p->format < 58)
-			++p->format;
-		p->f |= F_APP_PRECI;
-	}
-}
-	//#include <stdio.h>//
-	/*
+	#include <stdio.h>//
 static void	field_width_precision(t_printf *p)
 {
 	
 	//	ft_printf("%c\n", *p->format);
 //	printf("%d\n%d\n", p->precision, p->min_length);
 	if (48 < *p->format && *p->format < 58)
-		while (47 < *p->format && *p->format < 58)
-			p->min_length = p->min_length * 10 + *p->format++ - '0';
+		p->min_length = pf_atoi(&p->format);
 	if (*p->format == '.')
 	{
-		p->n = 1;
 		++p->format;
-		if (*p->format == '-' || *p->format == '+')
-			p->n = 44 - *p->format++;
-		while (47 < *p->format && *p->format < 58)
-			p->precision = p->precision * 10 + *p->format++ - '0';
-		p->precision *= p->n;
+		p->precision = pf_atoi(&p->format);
 		p->f |= F_APP_PRECI;
 	}
-}*/
+}
 
 /*
 ** 						~ CONVERSION SPECIFIER ~
@@ -171,7 +146,7 @@ static void	conversion_specifier(t_printf *p)
 	else if (p->c == 'd' || p->c == 'i' || p->c == 'D')
 		pf_putnb(p);
 	else if (p->c == 'f' || p->c == 'F')
-		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p);
+		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p, 10);
 	else if ((p->printed = ft_strchr_index("dDbBdDdDoOuUdDdDxX", p->c)) > -1)
 		pf_putnb_base(p->printed & ~1, p);
 	else if (p->c == 'c' || p->c == 'C')
@@ -186,9 +161,11 @@ static void	conversion_specifier(t_printf *p)
 		pf_puterror(strerror(errno), p);
 	else if (p->c == '{')
 		color(p);
+	else if (p->c == 'a' || p->c == 'A')
+		(p->f & F_APP_PRECI && !p->precision) ? pf_putnb(p) : pf_putdouble(p, 16);
 	else
 		cs_not_found(p);
-	p->len > -1 ? p->i = 0 : 0;
+	p->len > 0 ? p->i = 0 : 0;
 }
 
 /*
