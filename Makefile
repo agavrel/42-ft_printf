@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/28 18:36:22 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/06 06:03:17 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/06 16:16:20 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DIR_S = srcs
 
 DIR_O = obj
 
-HEADER = incl
+HEADER = includes
 
 SOURCES = ft_printf.c \
 			pf_parsing.c \

@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 16:04:03 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 14:58:51 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,6 @@
 ** cancels the zero flag. if there is a + it cancels the sp flag.
 ** sharp is to add the prefix 0x for hexa for example
 */
-
-static void	parse_flags(t_printf *p)
-{
-	short	n;
-
-	while ((n = ft_strchr_index("# +-0*", *p->format)) > -1 && ++p->format)
-		p->f |= (1 << n);
-	((p->f & F_MINUS) && !(p->f & F_WILDCARD)) ? p->f &= ~F_ZERO : 0;
-	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
-	if (p->f & F_WILDCARD)
-	{
-		p->f &= ~F_WILDCARD;
-		if ((n = (int)va_arg(p->ap, int)) < 0)
-		{
-			p->f |= F_MINUS;
-			n = -n;
-		}
-		else
-			p->f &= ~F_MINUS;
-		if (!(p->f & F_APP_PRECI))
-			p->min_length = n;
-		else
-		{
-			p->precision = (!(p->f & F_MINUS)) ? n : 0;
-			p->f = (!n) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
-		}
-	}
-}
 
 /*
 ** 						~ FIELD WIDTH ~
@@ -92,18 +64,85 @@ static void	parse_flags(t_printf *p)
 ** on the input, respectively : h, hh, l, ll, j, z
 */
 
+static void	parse_flags(t_printf *p)
+{
+	while ((p->n = ft_strchr_index("# +-0*", *p->format)) > -1 && ++p->format)
+		p->f |= (1 << p->n);
+	((p->f & F_MINUS) && !(p->f & F_WILDCARD)) ? p->f &= ~F_ZERO : 0;
+	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
+	if (p->f & F_WILDCARD)
+	{
+		p->f &= ~F_WILDCARD;
+		if ((p->n = (int)va_arg(p->ap, int)) < 0)
+		{
+			p->f |= F_MINUS;
+			p->n = -p->n;
+		}
+		else
+			p->f &= ~F_MINUS;
+		if (!(p->f & F_APP_PRECI))
+			p->min_length = p->n;
+		else
+		{
+			p->precision = (!(p->f & F_MINUS)) ? p->n : 0;
+			p->f = (!p->n) ? p->f | F_APP_PRECI : p->f & ~F_APP_PRECI;
+		}
+	}
+}
+
+static int		ft_atoic(char *s)
+{
+	long	r;
+	short	sign;
+
+	r = 0;
+	sign = 1;
+	if (*s == '-' || *s == '+')
+		sign = 44 - *s++;
+	while (*s >= '0' && *s <= '9')
+		r = r * 10 + *s++ - '0';
+	return (sign * (int)r);
+}
+
 static void	field_width_precision(t_printf *p)
 {
 	if (48 < *p->format && *p->format < 58)
-		if ((p->min_length = ft_atoi(&p->format)) < 1)
-			p->min_length = 1;
-	if (*p->format == '.' && ++p->format)
 	{
-		if ((p->precision = ft_atoi(&p->format)) < 0)
-			p->precision = 0;
+		p->min_length = MAX(1, ft_atoic(p->format));
+		while (47 < *p->format && *p->format < 58)
+			++p->format;
+	}
+	if (*p->format == '.')
+	{
+		++p->format;
+		p->precision = MAX(ft_atoic(p->format), 0);
+		while (47 < *p->format && *p->format < 58)
+			++p->format;
 		p->f |= F_APP_PRECI;
 	}
 }
+	//#include <stdio.h>//
+	/*
+static void	field_width_precision(t_printf *p)
+{
+	
+	//	ft_printf("%c\n", *p->format);
+//	printf("%d\n%d\n", p->precision, p->min_length);
+	if (48 < *p->format && *p->format < 58)
+		while (47 < *p->format && *p->format < 58)
+			p->min_length = p->min_length * 10 + *p->format++ - '0';
+	if (*p->format == '.')
+	{
+		p->n = 1;
+		++p->format;
+		if (*p->format == '-' || *p->format == '+')
+			p->n = 44 - *p->format++;
+		while (47 < *p->format && *p->format < 58)
+			p->precision = p->precision * 10 + *p->format++ - '0';
+		p->precision *= p->n;
+		p->f |= F_APP_PRECI;
+	}
+}*/
 
 /*
 ** 						~ CONVERSION SPECIFIER ~
@@ -149,7 +188,7 @@ static void	conversion_specifier(t_printf *p)
 		color(p);
 	else
 		cs_not_found(p);
-	p->len > 0 ? p->i = 0 : 0;
+	p->len > -1 ? p->i = 0 : 0;
 }
 
 /*
@@ -187,6 +226,7 @@ void		parse_optionals(t_printf *p)
 		++p->format;
 	}
 	parse_flags(p);
+	(p->f & F_PLUS) ? p->f &= ~F_SPACE : 0;
 	p->c = *p->format;
 	conversion_specifier(p);
 }

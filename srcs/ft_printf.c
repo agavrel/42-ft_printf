@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 00:58:55 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 13:48:17 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 
 void	print_pointer_address(t_printf *p)
 {
-	void			*pointer;
+	void	*pointer;
 
 	pointer = va_arg(p->ap, void *);
 	p->f &= ~F_SHARP;
@@ -93,6 +93,7 @@ void	print_pointer_address(t_printf *p)
 		p->min_length - 3 - p->printed;
 	p->f |= F_SHARP;
 	p->f |= F_POINTER;
+	p->printed = 0;
 	itoa_base_printf((uintmax_t)pointer, 16, p);
 }
 

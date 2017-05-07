@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:27 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 15:57:34 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 12:47:03 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		buffer(t_printf *p, void *new, size_t size)
 {
+	long		new_i;
 	int			diff;
-	long long	new_i;
 
 	new_i = 0;
 	while (PF_BUF_SIZE - p->buffer_index < size)

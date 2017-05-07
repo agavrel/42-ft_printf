@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 12:47:13 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 14:49:09 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 ** Credit : Many thanks to R. Monnier for the test file.
 */
 
-#include "../incl/ft_printf.h"
+#include "../includes/ft_printf.h"
 #include <limits.h>
 # include <stdio.h>
 # include <locale.h>
@@ -821,20 +821,31 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	ft_printf("string : %s, dec : %d, binary nb: %b, octal nb: %o, unsigned nb: %u, hexadecimal nb: %x, with uppercase: %X\n", "42", 42, 42, 42, 42, 42, 42);
 	ft_printf("%S\n", L"잘했지 ?");
 
-
-
-*/
-
 	i = ft_printf("blabla%d blabla %C", 5, 1334567); // hardest test ?
 	printf(" -> %d for my PF\n", i);
 	j = printf("blabla%d blabla %C", 5, 1234567);
 	printf(" -> %d for LIBC PF\n", j);
 
+	 i = 5;
+	ft_printf("%p\n", &i);
+	printf("%p\n", &i);
+
+		i = ft_printf("blabla%d blabla %C", 5, 1334567); // hardest test ?
+	printf(" -> %d for my PF\n", i);
+	j = printf("blabla%d blabla %C", 5, 1234567);
+	printf(" -> %d for LIBC PF\n", j);
+
+*/
 
 
+	
+	i = ft_printf("{%10d}", 42);
+	printf(" -> %d for my PF\n", i);
+	j = printf("{%10d}", 42);
+	printf(" -> %d for LIBC PF\n", j);
 
 	/*
-
+make re && gcc libftprintf.a misc/main.c && ./a.out
 
 	printf("\n  \n");
 	i = ft_

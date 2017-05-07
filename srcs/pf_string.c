@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:49 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/06 06:02:50 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/07 14:56:58 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		pf_puterror(char *s, t_printf *p)
 ** print wide string and returns total len
 ** please refer to libft for ft_wcharlen and ft_wstrlen
 */
-#include <stdio.h>
+
 void		pf_putwstr(t_printf *p)
 {
 	wchar_t		*s;
@@ -139,9 +139,11 @@ void		pf_putstr(t_printf *p)
 
 void		pf_character(t_printf *p, unsigned c)
 {
-	if ((p->f & F_LONG || p->f & F_LONG2) && !(p->printed = ft_wcharlen(c))
-			&& !(p->padding = 0))
-		p->len = -1;
+	if (p->f & F_LONG || p->f & F_LONG2)
+	{
+		if (!(p->printed = ft_wcharlen(c)))
+				p->len = -1;
+	}
 	else
 		p->printed = 1;
 	if ((p->padding = p->min_length - p->printed) < 0)
