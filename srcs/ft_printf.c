@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:44 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 08:07:58 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 09:54:47 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,14 @@ char	*ft_sprintf(const char *format, ...)
 	while (*p.format && p.len > -1)
 	{
 		if (*p.format == '%')
-		{
-			if (!++(*p.format) || (*p.format == ' ' && (!p.format[1]
-			|| (!p.format[2] && p.format[1] == 'h'))))
-				break ;
-			else
-				parse_optionals(&p);
-		}
+			parse_optionals(&p);
 		else if (++p.i)
 			buffer(&p, &*p.format, 1);
 		++p.format;
 	}
 	p.buff[p.buffer_index + 1] = '\0';
-	ret = ft_strdup(p.buff);
+	if (!(ret = ft_strdup(p.buff)))
+		return (NULL);
 	va_end(p.ap);
 	return (ret);
 }
