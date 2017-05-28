@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/12 13:55:55 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/06 05:50:43 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/28 06:57:25 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ HEADER = libft.h
 
 LIBFILES = $(SRC:.c=.o)
 
-SRC = ft_atoi.c \
+SRC = ft_atoi_parse.c \
 	  ft_bzero.c \
 	  ft_memchr.c \
 	  ft_memcpy.c \

@@ -21,7 +21,7 @@
 
 size_t				ft_strlen(const char *str);
 int					ft_strchr_index(char *s, int c);
-int					ft_atoi(char **s);
+int					ft_atoi_parse(char **s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memchr(const void *mem, const unsigned char c,
 										size_t n);

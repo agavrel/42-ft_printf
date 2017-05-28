@@ -12,14 +12,15 @@ Basics, requested from subject:
 * F) displaying pointer address (%p).
 
 Bonus:
-* A) Handles multi fd (use ft_dprintf(int fd, char const format, ...) instead of ft_printf).
-* B) <strong>All flags stored on only 14 bits.</strong> 
-* C) wildcard_length_modifier (%*) : replaces precision and field_width with parameter in va_list ap.
-* D) print_len with %n (refer to ft_printf.c : *va_arg(ap, int *) = p->len;).
-* E) displaying errno with %m.
-* F) colors with '%{' (%{red}).
-* G) %f and %F to handle double and float numbers.
-* H) <strong>At 140% of libc printf speed</strong> thanks to buffer addition and functions' optimization.
+* A) <strong>At 140% of libc printf speed</strong> thanks to buffer addition and functions' optimization.
+* B) Handles multi fd (use ft_dprintf(int fd, char const format, ...) instead of ft_printf).
+* C) <strong>All flags stored on only 14 bits.</strong>
+* D) wildcard_length_modifier (%*) : replaces precision and field_width with parameter in va_list ap.
+* E) print_len with %n (refer to ft_printf.c : *va_arg(ap, int *) = p->len;).
+* F) displaying errno with %m.
+* G) colors with '%s' and then for example PF_BLUE.
+* H) %f and %F to handle double and float numbers.
+* I) %a and %A to handle hexadecimal double numbers (rather pointless...).
 
 ## Sources
 * https://linux.die.net/man/3/printf
@@ -33,7 +34,7 @@ $> gcc libftprintf.a srcs/main.c && ./a.out
 ## How to use examples
 ```
 #include "ft_printf.h"
-ft_printf("string : %s, dec : %d, binary nb: %b, octal nb: %o, unsigned nb: %u, hexadecimal nb: %x, with uppercase: %X\n", "42", 42, 42, 42, 42, 42, 42);
+ft_printf("%sstring : %s, dec : %d, binary nb: %b, octal nb: %o, unsigned nb: %u, hexadecimal nb: %x, with uppercase: %X%s\n", PF_GREEN, "42", 42, 42, 42, 42, 42, 42, PF_EOC);
 ft_printf("%S\n", L"잘했지 ?");
 ```
 
@@ -44,4 +45,4 @@ $> 잘했지 ?
 ```
 
 ## Contact & contribute
-To contact me and helping me to (fix bugs || improve) FDF, feel free to e-mail me at **angavrel at student dot 42 dot fr**
+To contact me and helping me to (fix bugs || improve) ft_printf, feel free to e-mail me at **angavrel at student dot 42 dot fr**

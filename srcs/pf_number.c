@@ -6,12 +6,11 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:33 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 14:23:00 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 07:29:29 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
-
 
 void		pf_putnb(t_printf *p)
 {
@@ -29,7 +28,7 @@ void		pf_putnb(t_printf *p)
 		n = ((intmax_t)va_arg(p->ap, ssize_t));
 	else
 		n = ((intmax_t)va_arg(p->ap, int));
-	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
+	(p->f & F_ZERO) ? p->preci = p->min_length : 0;
 	itoa_printf(n, p, 0);
 }
 
@@ -52,7 +51,8 @@ void		pf_putnb_base(int base, t_printf *p)
 	itoa_base_printf(n, base, p);
 }
 
-static void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE], t_printf *p)
+static void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE],
+	t_printf *p)
 {
 	int		len;
 
@@ -81,8 +81,8 @@ void		itoa_printf(intmax_t n, t_printf *p, int len)
 		++len;
 	}
 	if ((n < 0 || p->f & F_PLUS || p->f & F_SPACE) && p->f & F_ZERO)
-		--p->precision;
-	p->printed = MAX(len, p->precision);
+		--p->preci;
+	p->printed = MAX(len, p->preci);
 	if (n < 0 || p->f & F_PLUS || p->f & F_SPACE)
 		++p->printed;
 	p->padding = (p->printed > p->min_length) ? 0 : p->min_length - p->printed;
@@ -106,9 +106,9 @@ void		itoa_base_printf(uintmax_t n, int b, t_printf *p)
 	tmp = n;
 	while (tmp && ++p->printed)
 		tmp /= b;
-	(p->f & F_ZERO) ? p->precision = p->min_length : 0;
-	ext = (p->printed >= p->precision) ? 0 : 1;
-	p->printed = MAX(p->precision, p->printed);
+	(p->f & F_ZERO) ? p->preci = p->min_length : 0;
+	ext = (p->printed >= p->preci) ? 0 : 1;
+	p->printed = MAX(p->preci, p->printed);
 	((p->f & F_SHARP) && b == 8 && !ext) ? --p->min_length : 0;
 	((p->f & F_SHARP) && b == 8 && !n && (p->f & F_APP_PRECI)) ?
 	++p->printed : 0;

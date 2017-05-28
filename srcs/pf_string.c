@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:49 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 14:56:58 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 07:29:29 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void		pf_putwstr(t_printf *p)
 	{
 		p->printed = (int)(ft_wstrlen((unsigned *)s));
 		if (p->f & F_APP_PRECI)
-			p->printed = p->printed > p->precision ? p->precision : p->printed;
+			p->printed = p->printed > p->preci ? p->preci : p->printed;
 		if ((p->padding = (p->min_length - p->printed)) < 0)
 			p->padding = 0;
-		p->f = (p->min_length > p->precision) ?
+		p->f = (p->min_length > p->preci) ?
 			p->f & ~F_APP_PRECI : p->f | F_APP_PRECI;
 		padding(p, 0);
 		charlen = 0;
@@ -113,7 +113,7 @@ void		pf_putstr(t_printf *p)
 	{
 		p->printed = (int)(ft_strlen((char*)s));
 		if (p->f & F_APP_PRECI)
-			p->printed = p->printed > p->precision ? p->precision : p->printed;
+			p->printed = p->printed > p->preci ? p->preci : p->printed;
 		if ((p->padding = (p->min_length - p->printed)) > 0)
 		{
 			p->c = 32 | (p->f & F_ZERO);
@@ -139,11 +139,8 @@ void		pf_putstr(t_printf *p)
 
 void		pf_character(t_printf *p, unsigned c)
 {
-	if (p->f & F_LONG || p->f & F_LONG2)
-	{
-		if (!(p->printed = ft_wcharlen(c)))
-				p->len = -1;
-	}
+	if ((p->f & F_LONG || p->f & F_LONG2) && (!(p->printed = ft_wcharlen(c))))
+		p->len = -1;
 	else
 		p->printed = 1;
 	if ((p->padding = p->min_length - p->printed) < 0)

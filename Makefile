@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/28 18:36:22 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/06 16:16:20 by angavrel         ###   ########.fr        #
+#    Updated: 2017/05/28 07:04:53 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ SOURCES = ft_printf.c \
 			pf_number.c \
 			pf_string.c \
 			pf_bonus.c \
-			pf_buffer.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

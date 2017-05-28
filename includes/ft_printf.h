@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 15:15:51 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 07:30:45 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct	s_printf
 	int			len;
 	short		f;
 	int			min_length;
-	int			precision;
+	int			preci;
 	int			padding;
 	int			printed;
 	int			fd;
@@ -87,7 +87,7 @@ void			cs_not_found(t_printf *p);
 
 /*
 ** --------------------------- number related functions ------------------------
-** %d %D %i %f %F %b %B %o %O %u %U %h %H
+** %d %D %i %f %F %b %B %o %O %u %U %h %H %a %A
 */
 
 void			pf_putnb(t_printf *p);
@@ -115,11 +115,8 @@ void			padding(t_printf *p, int n);
 void			print_pointer_address(t_printf *p);
 
 /*
-** --------------------------- colors related function -------------------------
-**  %{red} %{green} %{yellow} %{blue} %{purple} %{cyan} %{eoc}
+** --------------------------- colors related defines --------------------------
 */
-
-void			color(t_printf *p);
 
 # define PF_RED			"\033[31m"
 # define PF_GREEN		"\033[32m"
