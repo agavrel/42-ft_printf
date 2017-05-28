@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 07:30:45 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 08:00:17 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct	s_printf
 
 int				ft_printf(const char *format, ...);
 int				ft_dprintf(int fd, const char *format, ...);
+char			*ft_sprintf(const char *format, ...);
 void			parse_optionals(t_printf *p);
 void			cs_not_found(t_printf *p);
 

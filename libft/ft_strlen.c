@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/02 13:48:13 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/03 13:43:07 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 08:12:49 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static const char	*byte_zero(const unsigned long *longword_ptr,
 	const char				*cp;
 	int						i;
 
-	while (1)
+	while (42)
 	{
 		longword = *longword_ptr++;
 		if (((longword - lomagic) & ~longword & himagic))

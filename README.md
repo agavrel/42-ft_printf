@@ -21,6 +21,7 @@ Bonus:
 * G) colors with '%s' and then for example PF_BLUE.
 * H) %f and %F to handle double and float numbers.
 * I) %a and %A to handle hexadecimal double numbers (rather pointless...).
+* J) Also returns the string only with ft_sprintf.
 
 ## Sources
 * https://linux.die.net/man/3/printf

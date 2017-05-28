@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:21 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 07:29:29 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 07:32:37 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,22 @@ void			buffer(t_printf *p, void *new, size_t size)
 	ft_memcpy(&(p->buff[p->buffer_index]), &(new[new_i]), size);
 	p->buffer_index += size;
 	p->len += size;
+}
+
+/*
+** 32 is ascii for space and 48 for 0, flag 0 is 16 bits if set.
+*/
+
+void			padding(t_printf *p, int n)
+{
+	if (p->padding)
+	{
+		p->c = 32 | (p->f & F_ZERO);
+		if (!n && !(p->f & F_MINUS))
+			while (p->padding--)
+				buffer(p, &p->c, 1);
+		else if (n && (p->f & F_MINUS))
+			while (p->padding--)
+				buffer(p, &p->c, 1);
+	}
 }

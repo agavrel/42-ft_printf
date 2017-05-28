@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 18:29:58 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 06:19:58 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/05/28 08:11:37 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ double				ft_pow(double n, int pow);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_wcharlen(unsigned c);
 size_t				ft_wstrlen(unsigned *s);
+char				*ft_strdup(const char *s1);
 
 #endif
