@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 08:05:32 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/06/08 21:47:46 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int ac, char **av)
 	char	*str;
 	char	c;
 
-	setlocale(LC_ALL, "");
+//	setlocale(LC_ALL, "");
 	(void)ac;
 
 
@@ -636,16 +636,22 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	j = printf("blabla%d blabla %C", 5, 1234567);
 	printf(" -> %d for LIBC PF\n", j);
 */
-
-
-
+	i = INT_MIN;
+	while (i < INT_MAX)
+	{
+		
+//		ft_printf("%C", i);
+		printf("%C", i);
+		++i;
+	}
+/*}
 	i = ft_printf("{%a}", 30.5655);
 	printf(" -> %d for my PF\n", i);
 	j = printf("{%a}", 30.5655);
 	printf(" -> %d for LIBC PF\n", j);
 
 	ft_printf("%s", ft_sprintf("lalalal8lalalal8lalalal8lalalal8lalalal8lalalal8lalalal8lalalal8l"));
-
+*/
 	/*
 make re && gcc libftprintf.a misc/main.c && ./a.out
 	printf("\n  \n");

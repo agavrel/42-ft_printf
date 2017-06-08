@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 00:03:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/07 12:51:42 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/06/08 21:58:05 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*
 ** returns the number of bytes used by wchar
+** another interesting one: https://github.com/iburel/libft/blob/master/ft_printf/ft_printf_c.c
 */
 
 size_t	ft_wcharlen(unsigned wc)
