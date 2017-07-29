@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 19:18:38 by angavrel          #+#    #+#             */
-/*   Updated: 2017/06/08 21:47:46 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/06/08 22:00:24 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -636,12 +636,12 @@ printf("\nprintf(\"{%%030S}\", L\"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-
 	j = printf("blabla%d blabla %C", 5, 1234567);
 	printf(" -> %d for LIBC PF\n", j);
 */
-	i = INT_MIN;
-	while (i < INT_MAX)
+	i = -2147483648;
+	while (i < 2147483647)
 	{
 		
-//		ft_printf("%C", i);
-		printf("%C", i);
+		ft_printf("%C", i);
+	//	printf("%C", i);
 		++i;
 	}
 /*}

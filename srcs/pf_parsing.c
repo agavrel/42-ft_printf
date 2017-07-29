@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 07:29:29 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/07/29 22:36:08 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** sharp is to add the prefix 0x for hexa for example
 */
 
-static void	parse_flags(t_printf *p)
+static inline void	parse_flags(t_printf *p)
 {
 	while ((p->n = ft_strchr_index("# +-0*", *p->format)) > -1 && ++p->format)
 		p->f |= (1 << p->n);
@@ -90,12 +90,12 @@ static void	parse_flags(t_printf *p)
 ** on the input, respectively : h, hh, l, ll, j, z
 */
 
-static int	ft_max(int a, int b)
+static inline int	ft_max(int a, int b)
 {
 	return (a > b ? a : b);
 }
 
-static void	field_width_precision(t_printf *p)
+static inline void	field_width_precision(t_printf *p)
 {
 	if (48 < *p->format && *p->format < 58)
 		p->min_length = ft_max(ft_atoi_parse(&p->format), 1);
@@ -141,7 +141,7 @@ static void	field_width_precision(t_printf *p)
 ** if the character is uppercase then p->cs.uppercase will be set to 1.
 */
 
-static void	conversion_specifier(t_printf *p)
+static inline void	conversion_specifier(t_printf *p)
 {
 	if (ft_strchr_index("CDSUOBX", p->c) > -1)
 		p->f |= (p->c != 'X') ? F_LONG : F_UPCASE;
