@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/28 18:37:46 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/30 21:19:26 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/10/14 16:35:08 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,27 @@
 /*
 ** --------------------------- Masks Definition --------------------------------
 */
-
+/*
+typedef struct	s_flag
+{
+	char		sharp : 1;
+	char		space : 1;
+	char		plus : 1;
+	char		minus : 1;
+	char		zero : 1;
+	char		wildcard : 1;
+	char		upcase : 1;
+	char		short1 : 1;
+	char		short2 : 1;
+	char		long1 : 1;
+	char		long2 : 1;
+	char		intmax : 1;
+	char		sizet : 1;
+	char		min_len : 1;
+	char		app_preci : 1;
+	char		pointer : 1;
+}				t_flag;
+*/
 # define F_SHARP		(1 << 0)
 # define F_SPACE		(1 << 1)
 # define F_PLUS 		(1 << 2)
@@ -61,6 +81,7 @@
 typedef struct	s_printf
 {
 	int			len;
+//	t_flag		flag; //
 	short		f;
 	int			min_length;
 	int			preci;
@@ -105,7 +126,7 @@ void			pf_putdouble(t_printf *p, int n);
 void			pf_putstr(t_printf *p);
 void			pf_putwstr(t_printf *p);
 void			pf_character(t_printf *p, unsigned c);
-void			pf_puterror(char *s, t_printf *p);
+void			pf_puterror(t_printf *p);
 
 /*
 ** --------------------------- miscellaneous functions -------------------------

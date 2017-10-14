@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:49 by angavrel          #+#    #+#             */
-/*   Updated: 2017/05/28 07:29:29 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/10/14 16:34:58 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ static void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
 ** prints string and returns its len, if no len will print (null) and return 6
 */
 
-void		pf_puterror(char *s, t_printf *p)
+void		pf_puterror(t_printf *p)
 {
+	char *s;
+
+	s = strerror(errno);
 	if (!s)
 	{
 		if (!(p->f & F_ZERO))
@@ -107,6 +110,8 @@ void		pf_putstr(t_printf *p)
 {
 	unsigned	*s;
 
+	if (p->f & F_LONG || p->f & F_LONG2)
+		pf_putwstr(p);
 	if (!(s = va_arg(p->ap, unsigned*)))
 		pf_puterror(0, p);
 	else

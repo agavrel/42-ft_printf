@@ -6,7 +6,7 @@
 #    By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/28 18:36:22 by angavrel          #+#    #+#              #
-#    Updated: 2017/05/28 07:04:53 by angavrel         ###   ########.fr        #
+#    Updated: 2017/10/14 16:22:43 by angavrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): $(OBJS)
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 
-$(DIR_O)/%.o: $(DIR_S)/%.c
+$(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
 	@mkdir -p obj
 	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
 

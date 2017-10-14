@@ -6,7 +6,7 @@
 /*   By: angavrel <angavrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/06 06:02:43 by angavrel          #+#    #+#             */
-/*   Updated: 2017/07/29 22:36:08 by angavrel         ###   ########.fr       */
+/*   Updated: 2017/10/14 17:59:07 by angavrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,55 @@ static inline void	field_width_precision(t_printf *p)
 ** if the character is uppercase then p->cs.uppercase will be set to 1.
 */
 
+
+static inline void pf_printlen(t_printf *p)
+{
+	*va_arg(p->ap, int *) = p->len;
+}
+
+static inline void fill_functions_pointer(int (**f)(t_printf *))
+{
+	int	i;
+
+	i = 0;
+	while (i < 256)
+		f[i++] = cs_not_found;
+	f['s'] = pf_putstr;//(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
+	f['d'] = pf_putnb;
+	f['i'] = pf_putnb;
+	f['D'] = pf_putnb;
+	f['f'] = pf_putdouble;
+	f['F'] = pf_putdouble;
+	f['S'] = pf_putwstr;
+	f['c'] = pf_character;
+	f['C'] = pf_character;
+	f['n'] = pf_printlen;
+	f['m'] = pf_puterror;
+	f['p'] = print_pointer_address;
+}
+
+static inline void fill_tab(int *tab)
+{
+	ft_bzero(tab, 256 * sizeof(*tab));
+	tab['b'] = 2;
+	tab['B'] = 2;
+	tab['o'] = 8;
+	tab['O'] = 8;
+	tab['u'] = 10;
+	tab['U'] = 10;
+	tab['x'] = 16;
+	tab['X'] = 16;
+}
+
 static inline void	conversion_specifier(t_printf *p)
 {
+	static int (*f[256])(t_printf *) = {NULL};
+	static int tab[256];
+	if (!f[0])
+	{
+		fill_functions_pointer(f);
+		fill_tab(tab);
+	}
 	if (ft_strchr_index("CDSUOBX", p->c) > -1)
 		p->f |= (p->c != 'X') ? F_LONG : F_UPCASE;
 	if (p->c == 's')
@@ -151,8 +198,8 @@ static inline void	conversion_specifier(t_printf *p)
 		pf_putnb(p);
 	else if (p->c == 'f' || p->c == 'F')
 		(p->f & F_APP_PRECI && !p->preci) ? pf_putnb(p) : pf_putdouble(p, 10);
-	else if ((p->printed = ft_strchr_index("dDbBdDdDoOuUdDdDxX", p->c)) > -1)
-		pf_putnb_base(p->printed & ~1, p);
+	else if (tab[p->c] > 0)
+		pf_putnb_base(tab[p->c], p);
 	else if (p->c == 'c' || p->c == 'C')
 		pf_character(p, va_arg(p->ap, unsigned));
 	else if (p->c == 'S')
@@ -162,7 +209,7 @@ static inline void	conversion_specifier(t_printf *p)
 	else if (p->c == 'n')
 		*va_arg(p->ap, int *) = p->len;
 	else if (p->c == 'm')
-		pf_puterror(strerror(errno), p);
+		pf_puterror(p);
 	else if (p->c == 'a' || p->c == 'A')
 		(p->f & F_APP_PRECI && !p->preci) ? pf_putnb(p) : pf_putdouble(p, 16);
 	else
