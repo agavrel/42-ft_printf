@@ -62,7 +62,7 @@ static void		ldtoa_fill(double n, t_printf *p, long value, int b)
 	buffer(p, s, p->printed);
 }
 
-void			pf_putdouble(t_printf *p, int base)
+void			pf_putdouble(t_printf *p)
 {
 	double		n;
 	long		tmp;
@@ -73,17 +73,17 @@ void			pf_putdouble(t_printf *p, int base)
 	n = (double)va_arg(p->ap, double);
 	(p->f & F_ZERO) ? p->preci = p->min_length : 0;
 	if (!(p->f & F_APP_PRECI))
-		p->preci = 6 + base - 10 + 1;
+		p->preci = 7;
 	len = 1;
 	tmp = (long)(n < 0 ? -n : n);
 	while (tmp && ++len)
-		tmp /= base;
+		tmp /= 10;
 	p->printed = p->preci + len + ((n < 0) ? 1 : 0);
 	decimal = ft_dabs(n);
-	decimal = (decimal - (long)(ft_dabs(n))) * ft_pow(base, p->preci + 1);
-	decimal = ((long)decimal % base > 4) ? decimal / base + 1 : decimal / base;
+	decimal = (decimal - (long)(ft_dabs(n))) * ft_pow(10, p->preci + 1);
+	decimal = ((long)decimal % 10 > 4) ? decimal / 10 + 1 : decimal / 10;
 	value = (long)decimal;
-	ldtoa_fill(n, p, value, base);
+	ldtoa_fill(n, p, value, 10);
 }
 
 void			buffer(t_printf *p, void *new, size_t size)
@@ -95,15 +95,17 @@ void			buffer(t_printf *p, void *new, size_t size)
 	while (PF_BUF_SIZE - p->buffer_index < size)
 	{
 		diff = PF_BUF_SIZE - p->buffer_index;
-		ft_memcpy(&(p->buff[p->buffer_index]), &(new[new_i]), diff);
+		ft_memcpy((char *)(p->buff + p->buffer_index), \
+												(char *)(new + new_i), diff);
 		size -= diff;
 		new_i += diff;
 		p->buffer_index += diff;
 		p->len += diff;
-		write(p->fd, p->buff, p->buffer_index);
+		if (write(p->fd, p->buff, p->buffer_index) == -1)
+			return ;
 		p->buffer_index = 0;
 	}
-	ft_memcpy(&(p->buff[p->buffer_index]), &(new[new_i]), size);
+	ft_memcpy((char *)(p->buff + p->buffer_index), (char *)(new + new_i), size);
 	p->buffer_index += size;
 	p->len += size;
 }

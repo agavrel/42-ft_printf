@@ -21,8 +21,8 @@
 # include <stdarg.h>
 # include <errno.h>
 # define PF_BUF_SIZE	64
-# define MAX(a, b)		b & ((a - b) >> 31) | a & (~(a - b) >> 31)
-# define MIN(a, b)		a & ((a - b) >> 31) | b & (~(a - b) >> 31)
+# define MAX(a, b)		((b & ((a - b) >> 31)) | (a & (~(a - b) >> 31)))
+# define MIN(a, b)		((a & ((a - b) >> 31)) | (b & (~(a - b) >> 31)))
 
 /*
 ** --------------------------- Masks Definition --------------------------------
@@ -51,7 +51,7 @@ typedef struct	s_flag
 # define F_SHARP		(1 << 0)
 # define F_SPACE		(1 << 1)
 # define F_PLUS 		(1 << 2)
-# define F_MINUS        (1 << 3)
+# define F_MINUS    	(1 << 3)
 # define F_ZERO			(1 << 4)
 # define F_WILDCARD		(1 << 5)
 # define F_UPCASE		(1 << 6)
@@ -114,9 +114,9 @@ void			cs_not_found(t_printf *p);
 
 void			pf_putnb(t_printf *p);
 void			pf_putnb_base(int base, t_printf *p);
-void			itoa_printf(intmax_t d, t_printf *p, int len);
-void			itoa_base_printf(uintmax_t d, int b, t_printf *p);
-void			pf_putdouble(t_printf *p, int n);
+void			itoa_printf(__intmax_t d, t_printf *p, int len);
+void			itoa_base_printf(__uintmax_t d, int b, t_printf *p);
+void			pf_putdouble(t_printf *p);
 
 /*
 ** --------------------------- number related functions ------------------------
@@ -125,7 +125,7 @@ void			pf_putdouble(t_printf *p, int n);
 
 void			pf_putstr(t_printf *p);
 void			pf_putwstr(t_printf *p);
-void			pf_character(t_printf *p, unsigned c);
+void			pf_character(t_printf *p);
 void			pf_puterror(t_printf *p);
 
 /*

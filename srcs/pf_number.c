@@ -14,44 +14,44 @@
 
 void		pf_putnb(t_printf *p)
 {
-	intmax_t	n;
+	__intmax_t	n;
 
 	if (p->f & F_LONG || p->f & F_LONG2)
-		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, long long)) :
-			((intmax_t)va_arg(p->ap, long));
+		n = (p->f & F_LONG2) ? ((__intmax_t)va_arg(p->ap, long long)) :
+			((__intmax_t)va_arg(p->ap, long));
 	else if (p->f & F_SHORT || p->f & F_SHORT2)
-		n = (p->f & F_SHORT2) ? (intmax_t)((char)va_arg(p->ap, int)) :
-			(intmax_t)((short)va_arg(p->ap, int));
+		n = (p->f & F_SHORT2) ? (__intmax_t)((char)va_arg(p->ap, int)) :
+			(__intmax_t)((short)va_arg(p->ap, int));
 	else if (p->f & F_INTMAX)
-		n = (va_arg(p->ap, intmax_t));
+		n = (va_arg(p->ap, __intmax_t));
 	else if (p->f & F_SIZE_T)
-		n = ((intmax_t)va_arg(p->ap, ssize_t));
+		n = ((__intmax_t)va_arg(p->ap, ssize_t));
 	else
-		n = ((intmax_t)va_arg(p->ap, int));
+		n = ((__intmax_t)va_arg(p->ap, int));
 	(p->f & F_ZERO) ? p->preci = p->min_length : 0;
 	itoa_printf(n, p, 0);
 }
 
 void		pf_putnb_base(int base, t_printf *p)
 {
-	uintmax_t	n;
+	__uintmax_t	n;
 
 	if (p->f & F_LONG || p->f & F_LONG2)
-		n = (p->f & F_LONG2) ? ((intmax_t)va_arg(p->ap, unsigned long long)) :
-			((intmax_t)va_arg(p->ap, unsigned long));
+		n = (p->f & F_LONG2) ? ((__intmax_t)va_arg(p->ap, unsigned long long)) :
+			((__intmax_t)va_arg(p->ap, unsigned long));
 	else if (p->f & F_SHORT || p->f & F_SHORT2)
-		n = (p->f & F_SHORT2) ? (uintmax_t)((unsigned char)va_arg(p->ap, int))
-			: (uintmax_t)((unsigned short)va_arg(p->ap, int));
+		n = (p->f & F_SHORT2) ? (__uintmax_t)((unsigned char)va_arg(p->ap, int))
+			: (__uintmax_t)((unsigned short)va_arg(p->ap, int));
 	else if (p->f & F_INTMAX)
-		n = (va_arg(p->ap, uintmax_t));
+		n = (va_arg(p->ap, __uintmax_t));
 	else if (p->f & F_SIZE_T)
-		n = ((uintmax_t)va_arg(p->ap, size_t));
+		n = ((__uintmax_t)va_arg(p->ap, size_t));
 	else
-		n = (uintmax_t)va_arg(p->ap, unsigned int);
+		n = (__uintmax_t)va_arg(p->ap, unsigned int);
 	itoa_base_printf(n, base, p);
 }
 
-static void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE],
+static void	itoa_base_fill(__uintmax_t tmp, int b, char s[PF_BUF_SIZE],
 	t_printf *p)
 {
 	int		len;
@@ -69,10 +69,10 @@ static void	itoa_base_fill(uintmax_t tmp, int b, char s[PF_BUF_SIZE],
 	(p->f & F_APP_PRECI && p->f & F_ZERO) ? s[0] = ' ' : 0;
 }
 
-void		itoa_printf(intmax_t n, t_printf *p, int len)
+void		itoa_printf(__intmax_t n, t_printf *p, int len)
 {
 	char		s[21];
-	uintmax_t	tmp;
+	__uintmax_t	tmp;
 
 	tmp = n < 0 ? -n : n;
 	while (tmp)
@@ -96,9 +96,9 @@ void		itoa_printf(intmax_t n, t_printf *p, int len)
 	padding(p, 1);
 }
 
-void		itoa_base_printf(uintmax_t n, int b, t_printf *p)
+void		itoa_base_printf(__uintmax_t n, int b, t_printf *p)
 {
-	uintmax_t	tmp;
+	__uintmax_t	tmp;
 	char		s[21];
 	int			ext;
 

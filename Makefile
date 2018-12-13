@@ -46,6 +46,10 @@ $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
 	@mkdir -p obj
 	@$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
 
+test:
+	@make all misc/main.c
+
+
 norme:
 	norminette ./libft/
 	@echo

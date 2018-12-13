@@ -123,7 +123,7 @@ void	print_pointer_address(t_printf *p)
 	p->f |= F_SHARP;
 	p->f |= F_POINTER;
 	p->printed = 0;
-	itoa_base_printf((uintmax_t)pointer, 16, p);
+	itoa_base_printf((__uintmax_t)pointer, 16, p);
 }
 
 /*

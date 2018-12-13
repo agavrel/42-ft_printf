@@ -20,7 +20,7 @@
 ** nb_bytes <= MB_CUR_MAX define in stdlib.h
 */
 
-static void	pf_putwchar(t_printf *p, unsigned int wc, int wlen, int nb_bytes)
+static void	pf_putwchar(t_printf *p, unsigned int wc, unsigned int wlen, unsigned int nb_bytes)
 {
 	char	tmp[4];
 
@@ -81,7 +81,7 @@ void		pf_putwstr(t_printf *p)
 	int			charlen;
 
 	if (!(s = va_arg(p->ap, wchar_t *)))
-		pf_puterror(0, p);
+		pf_puterror(p);
 	else
 	{
 		p->printed = (int)(ft_wstrlen((unsigned *)s));
@@ -113,7 +113,7 @@ void		pf_putstr(t_printf *p)
 	if (p->f & F_LONG || p->f & F_LONG2)
 		pf_putwstr(p);
 	if (!(s = va_arg(p->ap, unsigned*)))
-		pf_puterror(0, p);
+		pf_puterror(p);
 	else
 	{
 		p->printed = (int)(ft_strlen((char*)s));
@@ -142,8 +142,10 @@ void		pf_putstr(t_printf *p)
 ** refer to libft for putwchar amd wcharlen functions
 */
 
-void		pf_character(t_printf *p, unsigned c)
+void		pf_character(t_printf *p)
 {
+	const unsigned c = va_arg(p->ap, unsigned);
+
 	if ((p->f & F_LONG || p->f & F_LONG2) && (!(p->printed = ft_wcharlen(c))))
 		p->len = -1;
 	else

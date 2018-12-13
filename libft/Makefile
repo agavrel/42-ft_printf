@@ -16,7 +16,7 @@ NAME = libft.a
 
 FLAGS = -Wall -Wextra -Werror -O2
 
-HEADER = libft.h
+HEADER = libft
 
 LIBFILES = $(SRC:.c=.o)
 
