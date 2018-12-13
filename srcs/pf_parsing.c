@@ -147,20 +147,25 @@ static inline void pf_printlen(t_printf *p)
 	*va_arg(p->ap, int *) = p->len;
 }
 
-typedef void (*funPointerArray)(t_printf*);
-
 static inline void fill_fp_array(funPointerArray function_pointer_array[256])
 {
 	int	i;
-//	ft_memset(function_pointer_array,
-//		&cs_not_found, sizeof(*function_pointer_array))
+
 	i = 0;
 	while (i < 256)
 		function_pointer_array[i++] = &cs_not_found;
-	function_pointer_array['s'] = &pf_putstr;//(p->f & F_LONG || p->f & F_LONG2) ? &pf_putwstr(p) : &pf_putstr(p);
+	function_pointer_array['s'] = &pf_putstr;
 	function_pointer_array['d'] = &pf_putnb;
 	function_pointer_array['i'] = &pf_putnb;
 	function_pointer_array['D'] = &pf_putnb;
+	function_pointer_array['b'] = pf_putnb_base;
+	function_pointer_array['B'] = pf_putnb_base;
+	function_pointer_array['o'] = pf_putnb_base;
+	function_pointer_array['O'] = pf_putnb_base;
+	function_pointer_array['u'] = pf_putnb_base;
+	function_pointer_array['U'] = pf_putnb_base;
+	function_pointer_array['x'] = pf_putnb_base;
+	function_pointer_array['X'] = pf_putnb_base;
 	function_pointer_array['f'] = &pf_putdouble;
 	function_pointer_array['F'] = &pf_putdouble;
 	function_pointer_array['S'] = &pf_putwstr;
@@ -170,12 +175,10 @@ static inline void fill_fp_array(funPointerArray function_pointer_array[256])
 	function_pointer_array['m'] = &pf_puterror;
 	function_pointer_array['p'] = &print_pointer_address;
 }
-/*
-static inline int fill_tab(void)
-{
-	int tab[256];
 
-	ft_bzero(tab, 256 * sizeof(*tab));
+static inline void fill_base_number_table(int tab[256])
+{
+	ft_memset(tab, 0, 256 * sizeof(*tab));
 	tab['b'] = 2;
 	tab['B'] = 2;
 	tab['o'] = 8;
@@ -184,53 +187,19 @@ static inline int fill_tab(void)
 	tab['U'] = 10;
 	tab['x'] = 16;
 	tab['X'] = 16;
-
-	return (tab);
-}*/
-
-int		pf_pua(t_printf *p)
-{
-	pf_putnb(p);
-	return (1);
 }
 
-
-//typedef void	*(void)(t_printf *p);
 static inline void	conversion_specifier(t_printf *p)
 {
-	static funPointerArray		f[256];
-//	static int tab[256] = fill_tab(void);
-	static int tab[256];
+	static funPointerArray	f[256];
+	static int 				tab[256];
 
 	fill_fp_array(f);
-	//f[0] =  pf_putnb(p);
-	//f[0] = &pf_pua;
-	f[0](p);
-
+	fill_base_number_table(tab);
 	if (ft_strchr_index("CDSUOBX", p->c) > -1)
 		p->f |= (p->c != 'X') ? F_LONG : F_UPCASE;
-	if (p->c == 's')
-		(p->f & F_LONG || p->f & F_LONG2) ? pf_putwstr(p) : pf_putstr(p);
-	else if (p->c == 'd' || p->c == 'i' || p->c == 'D')
-		pf_putnb(p);
-	else if (p->c == 'f' || p->c == 'F')
-		(p->f & F_APP_PRECI && !p->preci) ? pf_putnb(p) : pf_putdouble(p);
-	else if (tab[p->c] > 0)
-		pf_putnb_base(tab[p->c], p);
-	else if (p->c == 'c' || p->c == 'C')
-		pf_character(p);
-	else if (p->c == 'S')
-		pf_putwstr(p);
-	else if (p->c == 'p')
-		print_pointer_address(p);
-	else if (p->c == 'n')
-		*va_arg(p->ap, int *) = p->len;
-	else if (p->c == 'm')
-		pf_puterror(p);
-	else if (p->c == 'a' || p->c == 'A')
-		(p->f & F_APP_PRECI && !p->preci) ? pf_putnb(p) : pf_putdouble(p);
-	else
-		cs_not_found(p);
+	p->base = tab[p->c];
+	f[p->c](p);
 	p->len > 0 ? p->i = 0 : 0;
 }
 

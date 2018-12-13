@@ -20,6 +20,7 @@
 # include "libft.h"
 # include <stdarg.h>
 # include <errno.h>
+# include <stdint.h>
 # define PF_BUF_SIZE	64
 # define MAX(a, b)		((b & ((a - b) >> 31)) | (a & (~(a - b) >> 31)))
 # define MIN(a, b)		((a & ((a - b) >> 31)) | (b & (~(a - b) >> 31)))
@@ -82,6 +83,7 @@ typedef struct	s_printf
 {
 	int			len;
 //	t_flag		flag; //
+	uint8_t		base;
 	short		f;
 	int			min_length;
 	int			preci;
@@ -96,6 +98,13 @@ typedef struct	s_printf
 	int			i;
 	int			n;
 }				t_printf;
+
+/*
+** function pointer to redirect to the correct function according to the
+** corresponding conversion specifier
+*/
+
+typedef void (*funPointerArray)(t_printf*);
 
 /*
 ** --------------------------- ft_printf main functions ------------------------
@@ -113,7 +122,7 @@ void			cs_not_found(t_printf *p);
 */
 
 void			pf_putnb(t_printf *p);
-void			pf_putnb_base(int base, t_printf *p);
+void			pf_putnb_base(t_printf *p);
 void			itoa_printf(__intmax_t d, t_printf *p, int len);
 void			itoa_base_printf(__uintmax_t d, int b, t_printf *p);
 void			pf_putdouble(t_printf *p);

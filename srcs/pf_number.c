@@ -32,7 +32,7 @@ void		pf_putnb(t_printf *p)
 	itoa_printf(n, p, 0);
 }
 
-void		pf_putnb_base(int base, t_printf *p)
+void		pf_putnb_base(t_printf *p)
 {
 	__uintmax_t	n;
 
@@ -48,7 +48,7 @@ void		pf_putnb_base(int base, t_printf *p)
 		n = ((__uintmax_t)va_arg(p->ap, size_t));
 	else
 		n = (__uintmax_t)va_arg(p->ap, unsigned int);
-	itoa_base_printf(n, base, p);
+	itoa_base_printf(n, p->base, p);
 }
 
 static void	itoa_base_fill(__uintmax_t tmp, int b, char s[PF_BUF_SIZE],
