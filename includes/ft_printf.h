@@ -31,22 +31,22 @@
 /*
 typedef struct	s_flag
 {
-	char		sharp : 1;
-	char		space : 1;
-	char		plus : 1;
-	char		minus : 1;
-	char		zero : 1;
-	char		wildcard : 1;
-	char		upcase : 1;
-	char		short1 : 1;
-	char		short2 : 1;
-	char		long1 : 1;
-	char		long2 : 1;
-	char		intmax : 1;
-	char		sizet : 1;
-	char		min_len : 1;
-	char		app_preci : 1;
-	char		pointer : 1;
+	short		sharp : 1;
+	short		space : 1;
+	short		plus : 1;
+	short		minus : 1;
+	short		zero : 1;
+	short		wildcard : 1;
+	short		upcase : 1;
+	short		short1 : 1;
+	short		short2 : 1;
+	short		long1 : 1;
+	short		long2 : 1;
+	short		intmax : 1;
+	short		sizet : 1;
+	short		min_len : 1;
+	short		app_preci : 1;
+	short		pointer : 1;
 }				t_flag;
 */
 # define F_SHARP		(1 << 0)
@@ -82,7 +82,7 @@ typedef struct	s_flag
 typedef struct	s_printf
 {
 	int			len;
-//	t_flag		flag; //
+//	t_flag		flag;
 	uint8_t		base;
 	short		f;
 	int			min_length;
